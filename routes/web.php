@@ -47,7 +47,7 @@ Route::get('/manager/client/add', [ClientController::class, 'create'])->name('ma
 Route::post('manager/client/store', [ClientController::class, 'store'])->name('manager.client.store');
 Route::get('/manager/{clients}/edit', [ClientController::class, 'edit'])->name('manager.client.edit');
 Route::post('/manager/{clients}/update', [ClientController::class, 'update'])->name('manager.client.update');
-Route::get('/manager/{clients}/delete', [ClientController::class, 'destroy'])->name('manager.clients.delete');
+Route::get('/manager/{clients}/delete', [ClientController::class, 'destroy'])->name('manager.client.delete');
 
 // Manager CRUD Product
 Route::get('/manager/produk', [ProdukController::class, 'index'])->name('produk.index');

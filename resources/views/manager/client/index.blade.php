@@ -74,7 +74,7 @@
 
                                 <a class="btn btn-outline-danger btn-sm mb-1 "
                                     onclick="return confirm('Apakah anda yakin ?')"
-                                    href="{{ route('manager.clients.delete', ['clients' => $row->id]) }}"><i class="fa fa-trash"></i>
+                                    href="{{ route('manager.client.delete', ['clients' => $row->id]) }}"><i class="fa fa-trash"></i>
                                 </a>
 
                             </td>

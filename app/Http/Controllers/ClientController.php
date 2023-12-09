@@ -60,7 +60,7 @@ class ClientController extends Controller
         $user->role = $request->role;
 
         if ($user->save()) {
-            return redirect()->route('manager.clients.index')->with('success', 'Data Berhasil di tambahkan');
+            return redirect()->route('manager.client.index')->with('success', 'Data Berhasil di tambahkan');
         } else {
             return back()->withInput()->with('error', 'Gagal menambah data');
         }
@@ -128,7 +128,7 @@ class ClientController extends Controller
 
         // Simpan perubahan ke dalam database
         if ($user->save()) {
-            return redirect()->route('manager.clients.index')->with('success', 'Data User telah diperbarui');
+            return redirect()->route('manager.client.index')->with('success', 'Data User telah diperbarui');
         } else {
             return redirect()->back()->with('failed', 'Gagal memperbarui Data User');
         }
@@ -144,6 +144,6 @@ class ClientController extends Controller
     {
         $user->delete();
 
-        return \redirect()->route('manager.clients.index')->with('success', 'Data Berhasil di Hapus');
+        return redirect()->route('manager.client.index')->with('success', 'Data Berhasil di Hapus');
     }
 }
