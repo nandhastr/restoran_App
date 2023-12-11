@@ -25,6 +25,9 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        //mengizinkan role manager untuk mengakses crud
+        Gate::define('isManager', function ($user) {
+            return $user->role === 'manager';
+        });
     }
 }

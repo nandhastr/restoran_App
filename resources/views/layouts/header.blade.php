@@ -20,7 +20,8 @@
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset ('assets/dist/css/adminlte.min.css') }}">
     {{-- my style --}}
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    {{--
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}"> --}}
     @yield('css')
 </head>
 

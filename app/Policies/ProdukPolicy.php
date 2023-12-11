@@ -41,7 +41,9 @@ class ProdukPolicy
      */
     public function create(User $user)
     {
-        //
+        //role manager dapar melakukan create
+
+        return $user->hasRole('manager');
     }
 
     /**
@@ -53,7 +55,8 @@ class ProdukPolicy
      */
     public function update(User $user, Produk $produk)
     {
-        //
+        ////role manager dapar melakukan create
+        return $user->hasRole('manager');
     }
 
     /**

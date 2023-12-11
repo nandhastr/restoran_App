@@ -17,6 +17,13 @@ class ProdukController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+        $this->authorizeResource(Produk::class, 'produk');
+    }
+
+
+
     public function index()
     {
         $kategori = ProdukKategory::all();
@@ -31,6 +38,7 @@ class ProdukController extends Controller
      */
     public function create()
     {
+
         // form tambah produk
         $produk_kategori = ProdukKategory::all();
 
