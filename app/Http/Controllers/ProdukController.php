@@ -17,12 +17,6 @@ class ProdukController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function __construct()
-    {
-        $this->authorizeResource(Produk::class, 'produk');
-    }
-
-
 
     public function index()
     {

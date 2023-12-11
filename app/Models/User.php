@@ -59,10 +59,4 @@ class User extends Authenticatable
     {
         return $this->hasMany(Rating::class);
     }
-
-    // memilah role 
-    public function hasRole($role)
-    {
-        return $this->role === $role;
-    }
 }
