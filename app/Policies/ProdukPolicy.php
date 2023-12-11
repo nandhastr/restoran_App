@@ -31,6 +31,7 @@ class ProdukPolicy
     public function view(User $user, Produk $produk)
     {
         //
+
     }
 
     /**
@@ -41,7 +42,6 @@ class ProdukPolicy
      */
     public function create(User $user)
     {
-        //
     }
 
     /**
@@ -53,7 +53,6 @@ class ProdukPolicy
      */
     public function update(User $user, Produk $produk)
     {
-        //
     }
 
     /**

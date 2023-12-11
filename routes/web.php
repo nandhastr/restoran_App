@@ -53,8 +53,8 @@ Route::get('/manager/{clients}/delete', [ClientController::class, 'destroy'])->n
 Route::get('/manager/produk', [ProdukController::class, 'index'])->name('produk.index');
 Route::get('/manager/produk/create', [ProdukController::class, 'create'])->name('produk.create');
 Route::post('/manager/produk/store', [ProdukController::class, 'store'])->name('produk.store');
-Route::get('/manager/{produk}/edit', [ProdukController::class, 'edit'])->name('produk.edit');
-Route::post('/manager/{produk}/update', [ProdukController::class, 'update'])->name('produk.update');
+Route::get('manager/{produk}/edit-produk', [ProdukController::class, 'edit'])->name('produk.edit');
+Route::post('/manager/{produk}/update-produk', [ProdukController::class, 'update'])->name('produk.update');
 Route::get('/manager/delete_produk/{produk}', [ProdukController::class, 'destroy'])->name('produk.delete');
 
 Route::get('/export', [ExportController::class, 'index'])->name('export.index');
