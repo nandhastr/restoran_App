@@ -37,6 +37,11 @@ Route::get('/rating/{rating}/delete', [RatingController::class, 'destroy'])->nam
 
 // Route Kasir
 Route::get('/order', [OrderController::class, 'index'])->name('order.index');
+Route::post('/order', [OrderController::class, 'store'])->name('order.store');
+Route::get('/order/{order}/edit', [OrderController::class, 'edit'])->name('order.edit');
+Route::post('/order/{order}/update', [OrderController::class, 'update'])->name('order.update');
+Route::get('/order/{order}/delete', [OrderController::class, 'destroy'])->name('order.delete');
+
 
 //Route Manager
 Route::get('/manager', [ManagerController::class, 'index'])->name('manager.index');
@@ -47,7 +52,7 @@ Route::get('/manager/client/add', [ClientController::class, 'create'])->name('ma
 Route::post('manager/client/store', [ClientController::class, 'store'])->name('manager.client.store');
 Route::get('/manager/{clients}/edit', [ClientController::class, 'edit'])->name('manager.client.edit');
 Route::post('/manager/{clients}/update', [ClientController::class, 'update'])->name('manager.client.update');
-Route::get('/manager/{clients}/delete', [ClientController::class, 'destroy'])->name('manager.clients.delete');
+Route::get('/manager/{clients}/delete', [ClientController::class, 'destroy'])->name('manager.client.delete');
 
 // Manager CRUD Product
 Route::get('/manager/produk', [ProdukController::class, 'index'])->name('produk.index');
