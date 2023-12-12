@@ -271,7 +271,7 @@
 
                                         <button type="submit" class="btn btn-secondary">Beli Sekarang</button>
 
-                                        {{-- <input type="submit" class="btn btn-primary" value="Masukan Keranjang"> --}}
+                                        <input type="submit" class="btn btn-primary" value="Masukan Keranjang">
                                     </div>
                                 </div>
                             </div>
