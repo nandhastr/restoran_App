@@ -3,12 +3,13 @@
     <!-- Left navbar links -->
     <ul class="navbar-nav">
         <li class="nav-item">
-            <a class="nav-link" data-widget="pushmenu"  role="button"><i class="fas fa-bars"></i></a>
+            <a class="nav-link" data-widget="pushmenu" role="button"><i class="fas fa-bars"></i></a>
         </li>
         <li class="nav-item d-none d-sm-inline-block dropdown">
             <a class="nav-link">
                 <i class="fa fa-user pr-1"></i>
                 <span> Selamat Datang {{ Auth::user()->name }}</span>
+
             </a>
         </li>
 
