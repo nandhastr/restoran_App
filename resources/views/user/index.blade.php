@@ -178,7 +178,6 @@
                 @foreach ($Produk as $d)
                     <form action="{{ route('order.store') }}" method="post">
                         @csrf
-
                         <div class="col-lg-3 col-md-6 portfolio-item filter-{{ $d->nama_kategori }} "
                             style="background-color:#222831;padding:0px;border-radius:30px;margin-left:30px;">
                             <img class="card-img-top" src="{{ asset('uploads/' . $d->gambar_produks) }}"
@@ -265,22 +264,22 @@
 
                                     <div class="modal-footer">
 
-                                        <input type="hidden" name="user_id" id="user_id"
-                                            value="{{ Auth::user()->name }}">
 
-                                        <button type="submit" class="btn btn-secondary" data-dismiss="modal">Beli
-                                            Sekarang</button>
+                                        <input type="hidden" name="user_id" id="user_id"
+                                            value="{{ Auth::user()->id }}">
+                                        <input type="hidden" name="harga" id="harga" value="{{ $d->harga_produks }}">
+
+                                        <button type="submit" class="btn btn-secondary">Beli Sekarang</button>
 
                                         {{-- <input type="submit" class="btn btn-primary" value="Masukan Keranjang"> --}}
                                     </div>
                                 </div>
+                            </div>
+                        </div>
                     </form>
-            </div>
-        </div>
-        </form>
-        @endforeach
+                @endforeach
 
-        </div>
+            </div>
     </section><!-- End Portfolio Section -->
 
 
