@@ -61,7 +61,10 @@ class OrderController extends Controller
      */
     public function edit(Order $order)
     {
-        //
+        return view('order.edit', [
+            'order'=>$order,
+            'title' => 'Form Update'
+        ]);
     }
 
     /**
@@ -73,7 +76,23 @@ class OrderController extends Controller
      */
     public function update(UpdateOrderRequest $request, Order $order)
     {
-        //
+        $request->validate([
+            'no_order' => 'required',
+            'bayar' => 'required',
+            'total_bayar' => 'required',
+            'status' => 'required'
+        ]);
+        $order->no_order = $request->no_order;
+        $order->bayar = $request->bayar;
+        $order->total_bayar = $request->total_bayar;
+        $order->status = $request->status;
+
+        if ($order->update()) {
+            return redirect()->route('order.index')->with('success', 'order berhasil di ubah');
+        } else {
+            return redirect()->back()->withInput();
+        }
+            
     }
 
     /**
@@ -84,6 +103,7 @@ class OrderController extends Controller
      */
     public function destroy(Order $order)
     {
-        //
+        $order->delete();
+        return redirect()->route('order.index')->with('success', 'Order berhasil dihapus');
     }
 }

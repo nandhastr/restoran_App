@@ -12,13 +12,14 @@ class OrderDetail extends Model
 
     // untuk membuat nama tabel di database supaya sesuai kriteria
     protected $table = 'tbl_order_details';
+    protected $primaryKey = 'id_order_details';
 
     // order detail memiliki 1 order saja
     public function Order(){
-        return $this->belongsTo(Order::class, 'order_id');
+        return $this->belongsTo(Order::class,'id_order_details', 'order_id');
     }
 
-    // order detail memilki 1 paket saja
+    // // order detail memilki 1 paket saja
     public function Produk(){
         return $this->belongsTo(Paket::class);
     }

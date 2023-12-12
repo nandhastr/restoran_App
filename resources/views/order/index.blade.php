@@ -71,13 +71,14 @@
                                 <td>{{ $order->status }}</td>
                                 
                                 <td class="text-center">
-                                        <button class="btn btn-success mr-5" href="">edit</button>
-                                        <button class="btn btn-danger " href="">delete</button>
-        
-                                    {{-- <a href="{{ route('order.edit', $order->id) }}">
-                                        Edit</a>
-                                    <a href="{{ route('order.delete', $order->id) }}">
-                                        Delete</a> --}}
+                                <a class="btn btn-outline-success btn-sm mb-1 "
+                                    href="{{ route('order.edit', ['order' => $order->id_orders]) }}"><i
+                                        class="fa fa-edit small"></i>
+                                </a>
+                                <a class="btn btn-outline-danger btn-sm mb-1 "
+                                    onclick="return confirm('Apakah anda yakin ?')"
+                                    href="{{ route('order.delete', ['order' => $order->id_orders]) }}"><i class="fa fa-trash"></i>
+                                </a>                               
                                 </td>
                             </tr>
                         @endforeach
