@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\Produk;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
+use Carbon\Carbon;
+use PhpParser\Node\Expr\New_;
 
 class OrderController extends Controller
 {
@@ -18,7 +21,7 @@ class OrderController extends Controller
     {
         // menampilkan list yang order dari users yang login
         $orders = Order::with(['OrderDetail', 'User'])->get();
-        return view('order.index', compact('orders')); 
+        return view('order.index', compact('orders'));
     }
 
     /**
@@ -39,7 +42,29 @@ class OrderController extends Controller
      */
     public function store(StoreOrderRequest $request)
     {
-        //
+
+        $orderFirst = Order::orderBy('id_orders', 'desc')->first();
+        $noOrder = $orderFirst['id_orders'];
+
+        if ($orderFirst == null) {
+            $noOrder = 1;
+            $newNoOrder = Carbon::now()->format('Ymd') . str_pad($noOrder, 3, '0', STR_PAD_LEFT);
+        } else {
+            $newNoOrder = Carbon::now()->format('Ymd') . str_pad($noOrder, 3, '0', STR_PAD_LEFT);
+        }
+
+
+        $order = new Order();
+        $order->user_id = $request->user_id;
+        $order->no_order = $newNoOrder;
+        $order->bayar = 0;
+        $order->total_bayar = 0;
+        $order->status = 'Proses';
+        $order->save();
+
+        $order_id = $order->id;
+
+        return redirect()->route('client.index')->with('success', 'Order successfully created.');
     }
 
     /**

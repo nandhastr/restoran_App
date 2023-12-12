@@ -64,7 +64,7 @@
                         @foreach ($orders as $order)
                             <tr>
                                 <td>{{ $no++ }}</td>
-                                <td>{{ $order->user_id }}</td>
+                                <td>{{ $order->user->name }}</td>
                                 <td>{{ $order->no_order }}</td>
                                 <td>{{ $order->bayar }}</td>
                                 <td>{{ $order->total_bayar }}</td>
@@ -82,6 +82,7 @@
                                 </td>
                             </tr>
                         @endforeach
+
                     </tbody>
                 </table>
             </div>
