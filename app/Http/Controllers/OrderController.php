@@ -18,7 +18,7 @@ class OrderController extends Controller
     {
         // menampilkan list yang order dari users yang login
         $orders = Order::with(['OrderDetail', 'User'])->get();
-        return view('order.index', compact('orders')); 
+        return view('order.index', compact('orders'));
     }
 
     /**
@@ -39,7 +39,7 @@ class OrderController extends Controller
      */
     public function store(StoreOrderRequest $request)
     {
-        //
+        dd($request);
     }
 
     /**

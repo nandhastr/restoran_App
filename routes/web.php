@@ -37,6 +37,7 @@ Route::get('/rating/{rating}/delete', [RatingController::class, 'destroy'])->nam
 
 // Route Kasir
 Route::get('/order', [OrderController::class, 'index'])->name('order.index');
+Route::post('/order', [OrderController::class, 'store'])->name('order.store');
 
 //Route Manager
 Route::get('/manager', [ManagerController::class, 'index'])->name('manager.index');
