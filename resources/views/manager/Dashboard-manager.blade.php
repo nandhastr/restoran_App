@@ -107,8 +107,11 @@
                         @php
                         $bulan = now()->month; // Mengambil bulan saat ini
                         $salesMonthly = \App\Models\Order::whereMonth('created_at', $bulan)->get();
+
+                        $year = now()->years(); // Mengambil tahun saat ini
+                        $salesYears = \App\Models\Order::whereYear('created_at', $year)->get();
                         @endphp
-                        {{ __('Sales: :month', ['month' => \Carbon\Carbon::create()->month($bulan)->format('F')]) }}
+                        {{ __('Sales: :month', ['month' => now()->monthName . ', ' . now()->year]) }}
 
                     </div>
                     <!-- /.card-header -->
@@ -120,38 +123,50 @@
                                 </p>
                                 <div class="progress-group">
                                     Total Order
-                                    <span class="float-right"><b>{{ $orders->count() }}</b>/1000</span>
                                     @php
-                                    $progressPercentage = ($orders->count() / 1000) * 100;
+                                    $bulan = now()->month();
+                                    $orderMonthly = \App\Models\Order::whereMonth('created_at', $bulan)->get();
+                                    $totalOrder = $orderMonthly->count();
+                                    $targetOrder = 1000;
+                                    $persentaseOrder = ($totalOrder/$targetOrder)*100;
                                     @endphp
+                                    <span class="float-right"><b>{{ $totalOrder }}</b>/{{ $targetOrder }}</span>
                                     <div class="progress progress-sm">
-                                        <div class="progress-bar bg-danger" style="width: {{ $progressPercentage }}%">
+                                        <div class="progress-bar bg-danger" style="width: {{ $persentaseOrder }}%">
                                         </div>
                                     </div>
                                 </div>
                                 <!-- /.progress-group -->
                                 <div class="progress-group">
                                     <span class="progress-text">Purchase Pending</span>
-                                    <span class="float-right"><b>{{ $orders->where('status','proses')->count()
-                                            }}</b>/1000</span>
                                     @php
-                                    $orderPending = ($orders->where('status','proses')->count() / 1000)* 100;
+                                    $bulan = now()->month();
+                                    $pendingMonthly = \App\Models\Order::whereMonth('created_at', $bulan)->get();
+                                    $totalPending = $pendingMonthly->where('status','proses')->count();
+                                    $targetOrder = 1000;
+                                    $persentasePending = ($totalPending / $targetOrder) * 100;
                                     @endphp
+
+                                    <span class="float-right"><b>{{ $totalPending }}</b>/{{ $targetOrder }}</span>
                                     <div class="progress progress-sm">
-                                        <div class="progress-bar bg-info" style="width: {{ $orderPending }}%"></div>
+                                        <div class="progress-bar bg-info" style="width: {{ $persentasePending }}%">
+                                        </div>
                                     </div>
                                 </div>
                                 <!-- /.progress-group -->
 
                                 <div class="progress-group">
                                     Purchase Completed
-                                    <span class="float-right"><b>{{ $orders->where('status', 'bayar')->count()
-                                            }}</b>/1000</span>
                                     @php
-                                    $orderComplete = ($orders->where('status', 'bayar')->count()/1000)*100;
+                                    $bulan = now()->month();
+                                    $orderCompleteMonthly = \App\Models\Order::whereMonth('created_at', $bulan)->get();
+                                    $totalOrderComplete = $orderCompleteMonthly->where('status', 'bayar')->count();
+                                    $targerOrder = 1000;
+                                    $persentaseComplete = ($totalOrderComplete / $targetOrder) * 100;
                                     @endphp
+                                    <span class="float-right"><b>{{ $totalOrderComplete }}</b>/{{ $targetOrder }}</span>
                                     <div class="progress progress-sm">
-                                        <div class="progress-bar bg-succes" style="width: {{ $orderComplete }}%">
+                                        <div class="progress-bar bg-succes" style="width: {{ $persentaseComplete }}%">
                                         </div>
                                     </div>
                                 </div>
@@ -167,9 +182,22 @@
                         <div class="row">
                             <div class="col-sm-3 col-6">
                                 <div class="description-block border-right">
-                                    <span class="description-percentage text-success"><i class="fas fa-caret-up"></i>
-                                        17%</span>
-                                    <h5 class="description-header">$35,210.43</h5>
+                                    @php
+                                    $bulan = now()->month();
+                                    $totalBayarMonthly = \App\Models\Order::whereMonth('created_at', $bulan)->get();
+                                    $totalTerbayar = $totalBayarMonthly->sum('total_bayar');
+                                    $targetMonth = 10000000;
+                                    $persentaseTotalBayar = ($totalTerbayar / $targetMonth) * 100;
+
+                                    $descPersentase = ($totalTerbayar > 0)? 'description-percentage text-success' :
+                                    'description-percentage text-danger';
+                                    $iconPersentase = ($totalTerbayar > 0)? 'fas fa-caret-up text-success' : 'fas
+                                    fa-caret-down text-danger';
+                                    @endphp
+                                    <span class="{{ $descPersentase }}"><i class="{{ $iconPersentase }}"></i>
+                                        {{ $persentaseTotalBayar }}%</span>
+                                    <h5 class="description-header">Rp. {{ number_format($totalTerbayar, 0, ',', '.') }}
+                                    </h5>
                                     <span class="description-text">TOTAL REVENUE</span>
                                 </div>
                                 <!-- /.description-block -->

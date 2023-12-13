@@ -87,7 +87,7 @@ class OrderController extends Controller
     public function edit(Order $order)
     {
         return view('order.edit', [
-            'order'=>$order,
+            'order' => $order,
             'title' => 'Form Update'
         ]);
     }
@@ -117,7 +117,6 @@ class OrderController extends Controller
         } else {
             return redirect()->back()->withInput();
         }
-            
     }
 
     /**
