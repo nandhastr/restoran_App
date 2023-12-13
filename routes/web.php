@@ -38,6 +38,10 @@ Route::get('/rating/{rating}/delete', [RatingController::class, 'destroy'])->nam
 // Route Kasir
 Route::get('/order', [OrderController::class, 'index'])->name('order.index');
 Route::post('/order', [OrderController::class, 'store'])->name('order.store');
+Route::get('/order/{order}/edit', [OrderController::class, 'edit'])->name('order.edit');
+Route::post('/order/{order}/update', [OrderController::class, 'update'])->name('order.update');
+Route::get('/order/{order}/delete', [OrderController::class, 'destroy'])->name('order.delete');
+
 
 //Route Manager
 Route::get('/manager', [ManagerController::class, 'index'])->name('manager.index');
@@ -54,8 +58,8 @@ Route::get('/manager/{clients}/delete', [ClientController::class, 'destroy'])->n
 Route::get('/manager/produk', [ProdukController::class, 'index'])->name('produk.index');
 Route::get('/manager/produk/create', [ProdukController::class, 'create'])->name('produk.create');
 Route::post('/manager/produk/store', [ProdukController::class, 'store'])->name('produk.store');
-Route::get('/manager/{produk}/edit', [ProdukController::class, 'edit'])->name('produk.edit');
-Route::post('/manager/{produk}/update', [ProdukController::class, 'update'])->name('produk.update');
+Route::get('manager/{produk}/edit-produk', [ProdukController::class, 'edit'])->name('produk.edit');
+Route::post('/manager/{produk}/update-produk', [ProdukController::class, 'update'])->name('produk.update');
 Route::get('/manager/delete_produk/{produk}', [ProdukController::class, 'destroy'])->name('produk.delete');
 
 Route::get('/export', [ExportController::class, 'index'])->name('export.index');

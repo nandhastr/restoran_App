@@ -12,11 +12,13 @@ class Order extends Model
 
     protected $table = 'tbl_orders';
 
+    protected $primaryKey = 'id_orders';
+
     // order hanya di miliki 1 user saja
     public function User(){
         return $this->belongsTo(User::class);
     }
     public function OrderDetail(){
-        return $this->hasMany(OrderDetail::class);
+        return $this->hasMany(OrderDetail::class,'order_id','id_orders');
     }
 }

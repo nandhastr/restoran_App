@@ -25,7 +25,8 @@
         <div class="container-fluid">
             {{-- this content --}}
             <div class="container mt-3">
-                <form action="{{ route('update-produk', $produks) }}" method="post" enctype="multipart/form-data">
+                <form action="{{ route('produk.update', $produks->id_produks) }}" method="post"
+                    enctype="multipart/form-data">
                     @csrf
                     <input type="hidden" name="id" value="{{ $produks->id_produks }}">
 
@@ -109,7 +110,7 @@
                     <div class="row mb-3">
                         <button type="submit" class="btn btn-success text-center">Simpan</button>
                         <button class="btn btn-danger text-center ml-3"><a class="text-light"
-                                href="{{ route('data.products') }}">kembali</i></a></button>
+                                href="{{ route('produk.index') }}">kembali</i></a></button>
                     </div>
                 </form>
             </div>
