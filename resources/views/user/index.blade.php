@@ -166,10 +166,10 @@
                 <div class="col-lg-12 d-flex justify-content-center">
                     <ul id="portfolio-flters">
                         <li data-filter="*" class="filter-active">All</li>
-                        <li data-filter=".filter-Dessert">Desserts</li>
-                        <li data-filter=".filter-Drinks">Drinks</li>
-                        <li data-filter=".filter-Maincourse">Maincourse</li>
-                        <li data-filter=".filter-Snack">Snack</li>
+                        <li data-filter=".filter-1">Desserts</li>
+                        <li data-filter=".filter-2">Drinks</li>
+                        <li data-filter=".filter-3">Maincourse</li>
+                        <li data-filter=".filter-4">Snack</li>
                     </ul>
                 </div>
             </div>
@@ -178,7 +178,7 @@
                 @foreach ($Produk as $d)
                     <form action="{{ route('order.store') }}" method="post">
                         @csrf
-                        <div class="col-lg-3 col-md-6 portfolio-item filter-{{ $d->nama_kategori }} "
+                        <div class="col-lg-3 col-md-6 portfolio-item filter-{{ $d->kategori_produks}} "
                             style="background-color:#222831;padding:0px;border-radius:30px;margin-left:30px;">
                             <img class="card-img-top" src="{{ asset('uploads/' . $d->gambar_produks) }}"
                                 alt="Card image" style="border-radius:30px 30px 0px 50px">
@@ -207,7 +207,7 @@
                                         <p class="card-text"><b>Harga: </b> {{ $d->harga_produks }}</p>
                                         <p class="card-text"><b>Deskripsi: </b> </p>
                                         <p class="card-text">{{ $d->deskripsi_produks }}</p>
-                                        <p class="card-text"><b>stok_produks: </b> {{ $d->stok_produks }}</p>
+                                        <p class="card-text"><b>Stok Produk: </b> {{ $d->stok_produks }}</p>
 
                                         <button type="button" class="btn btn-secondary"
                                             data-dismiss="modal">OK</button>
