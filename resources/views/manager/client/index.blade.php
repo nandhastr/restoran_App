@@ -43,7 +43,8 @@
             <div class="container">
                 {{-- this content --}}
                 <a class="btn btn-info mb-3" href="{{ route('manager.index') }}"><i class="fa fa-arrow-left"></i></a>
-                <a class="btn btn-info mb-3" href="{{ route('manager.client.create') }}"><i class="fa-solid fa-circle-plus"></i>
+                <a class="btn btn-info mb-3" href="{{ route('manager.client.create') }}"><i
+                        class="fa-solid fa-circle-plus"></i>
                     Data
                     Client's</a>
                 <table class="table table-hover" id="data-tabel">
@@ -74,7 +75,8 @@
 
                                 <a class="btn btn-outline-danger btn-sm mb-1 "
                                     onclick="return confirm('Apakah anda yakin ?')"
-                                    href="{{ route('manager.client.delete', ['clients' => $row->id]) }}"><i class="fa fa-trash"></i>
+                                    href="{{ route('manager.client.delete', ['clients' => $row->id]) }}"><i
+                                        class="fa fa-trash"></i>
                                 </a>
 
                             </td>
