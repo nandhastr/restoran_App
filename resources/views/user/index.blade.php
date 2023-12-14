@@ -174,26 +174,22 @@
                 </div>
             </div>
 
-            <div class="row portfolio-container" style="padding-left:10%">
-                @foreach ($Produk as $d)
-                    <form action="{{ route('order.store') }}" method="post">
-                        @csrf
-                        <div class="col-lg-3 col-md-6 portfolio-item filter-{{ $d->kategori_produks}} "
-                            style="background-color:#222831;padding:0px;border-radius:30px;margin-left:30px;">
-                            <img class="card-img-top" src="{{ asset('uploads/' . $d->gambar_produks) }}"
-                                alt="Card image" style="border-radius:30px 30px 0px 50px">
-                            <div class="card-body" style="color:white;padding:30px;">
-                                <h4 class="card-title">{{ $d->nama_produks }}</h4>
-                                <p class="card-text">Rp {{ $d->harga_produks }}</p>
+            <div class="row portfolio-container" style="padding-left: 10%">
+    @foreach ($Produk as $d)
+        <div class="col-lg-2 col-md-6 portfolio-item filter-{{ $d->kategori_produks }} "
+            style="background-color: #222831; padding: 0px; border-radius: 20px; margin-left: 10px;">
+            <img class="card-img-top" src="{{ asset('uploads/' . $d->gambar_produks) }}" alt="Card image"
+                style="border-radius: 20px 20px 0 0; width: 100%; height: 150px; object-fit: cover;">
+            <div class="card-body" style="color: white; padding: 8px;">
+                <h4 class="card-title" style="font-size: 16px;">{{ $d->nama_produks }}</h4>
+                <p class="card-text" style="font-size: 14px;">Rp.{{$d->harga_produks}}</p>
+                <a class="btn btn-warning btn-sm" data-toggle="modal" data-target="#exampleModals{{ $d->id_produks }}"
+                    title="App 1">Lihat Produk</a>
+                <a class="btn btn-success btn-sm" data-toggle="modal" data-target="#exampleModal{{ $d->id_produks }}"
+                    title="App 1">Order <i class="bx bx-cart"></i></a>
+            </div>
+        </div>
 
-
-                                <a class="btn btn-warning" data-toggle="modal"
-                                    data-target="#exampleModals{{ $d->id_produks }}" title="App 1">Lihat Produk</a>
-                                <a class="btn btn-success" data-toggle="modal"
-                                    data-target="#exampleModal{{ $d->id_produks }}" title="App 1">Order <i
-                                        class="bx bx-cart"></i></a>
-                            </div>
-                        </div>
 
 
                         <div class="modal fade" id="exampleModals{{ $d->id_produks }}" tabindex="-1"
