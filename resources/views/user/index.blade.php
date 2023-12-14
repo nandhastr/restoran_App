@@ -175,42 +175,38 @@
             </div>
 
             <div class="row portfolio-container" style="padding-left: 10%">
-    @foreach ($Produk as $d)
-        <div class="col-lg-2 col-md-6 portfolio-item filter-{{ $d->kategori_produks }} "
-            style="background-color: #222831; padding: 0px; border-radius: 20px; margin-left: 10px;">
-            <img class="card-img-top" src="{{ asset('uploads/' . $d->gambar_produks) }}" alt="Card image"
-                style="border-radius: 20px 20px 0 0; width: 100%; height: 150px; object-fit: cover;">
-            <div class="card-body" style="color: white; padding: 8px;">
-                <h4 class="card-title" style="font-size: 16px;">{{ $d->nama_produks }}</h4>
-                <p class="card-text" style="font-size: 14px;">Rp.{{$d->harga_produks}}</p>
-                <a class="btn btn-warning btn-sm" data-toggle="modal" data-target="#exampleModals{{ $d->id_produks }}"
-                    title="App 1">Lihat Produk</a>
-                <a class="btn btn-success btn-sm" data-toggle="modal" data-target="#exampleModal{{ $d->id_produks }}"
-                    title="App 1">Order <i class="bx bx-cart"></i></a>
-            </div>
-        </div>
+                @foreach ($Produk as $d)
+                    <div class="col-lg-2 col-md-6 portfolio-item filter-{{ $d->kategori_produks }} "
+                        style="background-color: #222831; padding: 0px; border-radius: 20px; margin-left: 10px;">
+                        <img class="card-img-top" src="{{ asset('uploads/' . $d->gambar_produks) }}" alt="Card image"
+                            style="border-radius: 20px 20px 0 0; width: 100%; height: 200px; object-fit: cover;">
+                        <div class="card-body" style="color: white; padding: 8px; height: 125px; overflow: hidden;">
+                            <h4 class="card-title" style="font-size: 20px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ $d->nama_produks }}</h4>
+                            <p class="card-text" style="font-size: 14px;">Rp.{{ $d->harga_produks }}</p>
+                            <a class="btn btn-warning btn-sm" data-toggle="modal" data-target="#exampleModals{{ $d->id_produks }}"
+                                title="App 1">Lihat Produk</a>
+                            <a class="btn btn-success btn-sm" data-toggle="modal" data-target="#exampleModal{{ $d->id_produks }}"
+                                title="App 1">Order <i class="bx bx-cart"></i></a>
+                        </div>
+                    </div>
 
-
-
-                        <div class="modal fade" id="exampleModals{{ $d->id_produks }}" tabindex="-1"
-                            role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog " role="document">
-                                <div class="modal-content card" style="background-color:#E7F6F2">
-                                    <img class="card-img-top" src="{{ asset('uploads/' . $d->gambar_produks) }}"
-                                        alt="Card image">
-                                    <div class="card-body" align="center">
-                                        <h4 class="card-title">{{ $d->nama_produks }}</h4>
-                                        <p class="card-text"><b>Harga: </b> {{ $d->harga_produks }}</p>
-                                        <p class="card-text"><b>Deskripsi: </b> </p>
-                                        <p class="card-text">{{ $d->deskripsi_produks }}</p>
-                                        <p class="card-text"><b>Stok Produk: </b> {{ $d->stok_produks }}</p>
-
-                                        <button type="button" class="btn btn-secondary"
-                                            data-dismiss="modal">OK</button>
-                                    </div>
+                    <div class="modal fade" id="exampleModals{{ $d->id_produks }}" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content card" style="max-width: 300px; background-color:#E7F6F2;">
+                                <img class="card-img-top" src="{{ asset('uploads/' . $d->gambar_produks) }}" alt="Card image"
+                                    style="width: 100%; border-radius: 10px 10px 0 0; max-height: 360px; object-fit: cover;">
+                                <div class="modal-body" align="center" style="padding: 15px;">
+                                    <h4 class="card-title" style="font-size: 14px;">{{ $d->nama_produks }}</h4>
+                                    <p class="card-text" style="font-size: 12px;"><b>Harga: </b>Rp.{{ $d->harga_produks }}</p>
+                                    <p class="card-text" style="font-size: 12px;"><b>Deskripsi: </b> </p>
+                                    <p class="card-text" style="font-size: 12px;">{{ $d->deskripsi_produks }}</p>
+                                    <p class="card-text" style="font-size: 12px;"><b>Stok: </b> {{ $d->stok_produks }}</p>
+                                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">OK</button>
                                 </div>
                             </div>
                         </div>
+                    </div>
 
 
                         <div class="modal fade" id="exampleModal{{ $d->id_produks }}" tabindex="-1" role="dialog"
