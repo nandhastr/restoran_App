@@ -36,6 +36,9 @@ Route::get('/rating', [RatingController::class, 'index'])->name('rating.index');
 Route::get('/rating/{rating}/edit', [RatingController::class, 'edit'])->name('rating.edit');
 Route::get('/rating/{rating}/update', [RatingController::class, 'update'])->name('rating.update');
 Route::get('/rating/{rating}/delete', [RatingController::class, 'destroy'])->name('deleteRating');
+//rating v2
+Route::post('review-store', [UserController::class, 'reviewstore'])->name('review.store');
+
 
 // Route Kasir
 Route::get('/order', [OrderController::class, 'index'])->name('order.index');
