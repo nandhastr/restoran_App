@@ -34,6 +34,9 @@ Route::get('/client', [UserController::class, 'index'])->name('client.index');
 // Client rating
 Route::get('/rating', [RatingController::class, 'index'])->name('rating.index');
 Route::get('/rating/{rating}/delete', [RatingController::class, 'destroy'])->name('deleteRating');
+//rating v2
+Route::post('review-store', [UserController::class, 'reviewstore'])->name('review.store');
+
 
 // Route Kasir
 Route::get('/order', [OrderController::class, 'index'])->name('order.index');
