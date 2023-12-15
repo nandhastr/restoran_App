@@ -174,105 +174,85 @@
                 </div>
             </div>
 
-            <div class="row portfolio-container" style="padding-left:10%">
-                @foreach ($produk as $d)
-                    <form action="{{ route('order.store') }}" method="post">
-                        @csrf
-                        <div class="col-lg-3 col-md-6 portfolio-item filter-{{ $d->kategori_produks }} "
-                            style="background-color:#222831;padding:0px;border-radius:30px;margin-left:30px;">
-                            <img class="card-img-top" src="{{ asset('uploads/' . $d->gambar_produks) }}"
-                                alt="Card image" style="border-radius:30px 30px 0px 50px">
-                            <div class="card-body" style="color:white;padding:30px;">
-                                <h4 class="card-title">{{ $d->nama_produks }}</h4>
-                                <p class="card-text">Rp {{ $d->harga_produks }}</p>
 
+            <div class="row portfolio-container" style="padding-left: 10%">
+                @foreach ($Produk as $d)
+                    <div class="col-lg-2 col-md-6 portfolio-item filter-{{ $d->kategori_produks }} "
+                        style="background-color: #222831; padding: 0px; border-radius: 20px; margin-left: 10px;">
+                        <img class="card-img-top" src="{{ asset('uploads/' . $d->gambar_produks) }}" alt="Card image"
+                            style="border-radius: 20px 20px 0 0; width: 100%; height: 200px; object-fit: cover;">
+                        <div class="card-body" style="color: white; padding: 8px; height: 125px; overflow: hidden;">
+                            <h4 class="card-title" style="font-size: 20px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ $d->nama_produks }}</h4>
+                            <p class="card-text" style="font-size: 14px;">Rp.{{ $d->harga_produks }}</p>
+                            <a class="btn btn-warning btn-sm" data-toggle="modal" data-target="#exampleModals{{ $d->id_produks }}"
+                                title="App 1">Lihat Produk</a>
+                            <a class="btn btn-success btn-sm" data-toggle="modal" data-target="#exampleModal{{ $d->id_produks }}"
+                                title="App 1">Order <i class="bx bx-cart"></i></a>
 
-                                <a class="btn btn-warning" data-toggle="modal"
-                                    data-target="#exampleModals{{ $d->id_produks }}" title="App 1">Lihat Produk</a>
-                                <a class="btn btn-success" data-toggle="modal"
-                                    data-target="#exampleModal{{ $d->id_produks }}" title="App 1">Order <i
-                                        class="bx bx-cart"></i></a>
-                            </div>
                         </div>
+                    </div>
 
-
-                        <div class="modal fade" id="exampleModals{{ $d->id_produks }}" tabindex="-1"
-                            role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog " role="document">
-                                <div class="modal-content card" style="background-color:#E7F6F2">
-                                    <img class="card-img-top" src="{{ asset('uploads/' . $d->gambar_produks) }}"
-                                        alt="Card image">
-                                    <div class="card-body" align="center">
-                                        <h4 class="card-title">{{ $d->nama_produks }}</h4>
-                                        <p class="card-text"><b>Harga: </b> {{ $d->harga_produks }}</p>
-                                        <p class="card-text"><b>Deskripsi: </b> </p>
-                                        <p class="card-text">{{ $d->deskripsi_produks }}</p>
-                                        <p class="card-text"><b>Stok Produk: </b> {{ $d->stok_produks }}</p>
-
-                                        <button type="button" class="btn btn-secondary"
-                                            data-dismiss="modal">OK</button>
-                                    </div>
+                    <div class="modal fade" id="exampleModals{{ $d->id_produks }}" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content card" style="max-width: 300px; background-color:#222831;">
+                                <img class="card-img-top" src="{{ asset('uploads/' . $d->gambar_produks) }}" alt="Card image"
+                                    style="width: 100%; border-radius: 10px 10px 0 0; max-height: 360px; object-fit: cover;">
+                                <div class="modal-body" align="center" style="padding: 15px;">
+                                    <h4 class="card-title text-white" style="font-size: 14px;">{{ $d->nama_produks }}</h4>
+                                    <p class="card-text text-white" style="font-size: 12px;"><b>Harga: </b>Rp.{{ $d->harga_produks }}</p>
+                                    <p class="card-text text-white" style="font-size: 12px;"><b>Deskripsi: </b> </p>
+                                    <p class="card-text text-white" style="font-size: 12px;">{{ $d->deskripsi_produks }}</p>
+                                    <p class="card-text text-white" style="font-size: 12px;"><b>Stok: </b> {{ $d->stok_produks }}</p>
+                                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">OK</button>
                                 </div>
                             </div>
                         </div>
+                    </div>
 
 
-                        <div class="modal fade" id="exampleModal{{ $d->id_produks }}" tabindex="-1" role="dialog"
+
+                    <div class="modal fade" id="exampleModal{{ $d->id_produks }}" tabindex="-1" role="dialog"
                             aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-xl" role="document">
-
-                                <div class="modal-content" style="background-color:#E7F6F2">
+                            <div class="modal-dialog modal-lg" role="document">
+                                <div class="modal-content" style="background-color:#222831">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Pembelian Barang</h5>
-                                        <button type="button" class="close" data-dismiss="modal"
-                                            aria-label="Close">
+                                        <h5 class="modal-title text-white" id="exampleModalLabel">Pembelian Barang</h5>
+                                        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
 
                                     <div class="modal-body">
                                         <div class="row">
-                                            <label class="col-sm-3">Kuantitas </label>
+                                            <label class="col-sm-3 text-white">Kuantitas </label>
                                             <div class="col-sm-6">
                                                 <div class="input-group ">
                                                     <span class="input-group-btn">
-                                                        <button type="button"
-                                                            class="quantity-left-minus btn  btn-number"
-                                                            data-type="minus" data-field="">
-                                                            <i class="bx bx-minus"></i>
+                                                        <button type="button" class="quantity-left-minus btn  btn-number text-white" data-type="minus"
+                                                            data-field="">
+                                                            <i class="bx bx-minus text-white"></i>
                                                         </button>
                                                     </span>
-                                                    <input type="number" id="quantity" name="jumlah"
-                                                        class="form-control input-number" value="1"
-                                                        min="1" max="100">
-                                                    <input type="hidden" id="id_produk" name="id_produk"
-                                                        value="{{ $d->id_produks }}">
+                                                    <input type="number" id="quantity" name="jumlah" class="form-control input-number"
+                                                        value="1" min="1" max="100">
+                                                    <input type="hidden" id="id_produk" name="id_produk" value="{{ $d->id_produks }}">
                                                     <span class="input-group-btn">
-                                                        <button type="button"
-                                                            class="quantity-right-plus btn  btn-number"
-                                                            data-type="plus" data-field="">
+                                                        <button type="button" class="quantity-right-plus btn  btn-number text-white" data-type="plus"
+                                                            data-field="">
                                                             <i class="bx bx-plus"></i>
                                                         </button>
                                                     </span>
                                                 </div>
                                             </div>
-                                            <label class="col-sm-3">Tersisa {{ $d->stok_produks }} Buah</label>
+                                            <label class="col-sm-3 text-white">Tersisa: {{ $d->stok_produks }} Buah</label>
                                         </div>
-
-
                                     </div>
 
                                     <div class="modal-footer">
-
-
-                                        <input type="hidden" name="user_id" id="user_id"
-                                            value="{{ Auth::user()->id }}">
-                                        <input type="hidden" name="harga" id="harga"
-                                            value="{{ $d->harga_produks }}">
-
+                                        <input type="hidden" name="user_id" id="user_id" value="{{ Auth::user()->id }}">
+                                        <input type="hidden" name="harga" id="harga" value="{{ $d->harga_produks }}">
                                         <button type="submit" class="btn btn-secondary">Beli Sekarang</button>
-
-                                        {{-- <input type="submit" class="btn btn-primary" value="Masukan Keranjang"> --}}
                                     </div>
                                 </div>
                             </div>
