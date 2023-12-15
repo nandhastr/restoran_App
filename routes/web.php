@@ -33,6 +33,8 @@ Route::get('/client', [UserController::class, 'index'])->name('client.index');
 
 // Client rating
 Route::get('/rating', [RatingController::class, 'index'])->name('rating.index');
+Route::get('/rating/{rating}/edit', [RatingController::class, 'edit'])->name('rating.edit');
+Route::get('/rating/{rating}/update', [RatingController::class, 'update'])->name('rating.update');
 Route::get('/rating/{rating}/delete', [RatingController::class, 'destroy'])->name('deleteRating');
 
 // Route Kasir
