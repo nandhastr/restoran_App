@@ -125,6 +125,7 @@
                                     Total Order
                                     @php
                                     $bulan = now()->month();
+                                    // mengambil data order sesuai orderan di bulan tertentu
                                     $orderMonthly = \App\Models\Order::whereMonth('created_at', $bulan)->get();
                                     $totalOrder = $orderMonthly->count();
                                     $targetOrder = 1000;
@@ -141,6 +142,7 @@
                                     <span class="progress-text">Purchase Pending</span>
                                     @php
                                     $bulan = now()->month();
+                                    // mengambil data order sesuai orderan di bulan tertentu
                                     $pendingMonthly = \App\Models\Order::whereMonth('created_at', $bulan)->get();
                                     $totalPending = $pendingMonthly->where('status','proses')->count();
                                     $targetOrder = 1000;
@@ -159,6 +161,7 @@
                                     Purchase Completed
                                     @php
                                     $bulan = now()->month();
+                                    // mengambil data order sesuai orderan di bulan tertentu
                                     $orderCompleteMonthly = \App\Models\Order::whereMonth('created_at', $bulan)->get();
                                     $totalOrderComplete = $orderCompleteMonthly->where('status', 'bayar')->count();
                                     $targerOrder = 1000;
@@ -180,55 +183,65 @@
                     <!-- ./card-body -->
                     <div class="card-footer">
                         <div class="row">
-                            <div class="col-sm-3 col-6">
+                            <div class="col-sm-4 col-6">
                                 <div class="description-block border-right">
                                     @php
                                     $bulan = now()->month();
+                                    // mengambil data order sesuai orderan di bulan tertentu
                                     $totalBayarMonthly = \App\Models\Order::whereMonth('created_at', $bulan)->get();
                                     $totalTerbayar = $totalBayarMonthly->sum('total_bayar');
                                     $targetMonth = 10000000;
                                     $persentaseTotalBayar = ($totalTerbayar / $targetMonth) * 100;
-
+                                    // icon persentase
                                     $descPersentase = ($totalTerbayar > 0)? 'description-percentage text-success' :
                                     'description-percentage text-danger';
                                     $iconPersentase = ($totalTerbayar > 0)? 'fas fa-caret-up text-success' : 'fas
                                     fa-caret-down text-danger';
+                                    $profitText = ($totalTerbayar > 0 )? 'text-success': 'text-danger';
                                     @endphp
                                     <span class="{{ $descPersentase }}"><i class="{{ $iconPersentase }}"></i>
                                         {{ $persentaseTotalBayar }}%</span>
-                                    <h5 class="description-header">Rp. {{ number_format($totalTerbayar, 0, ',', '.') }}
+                                    <h5 class="description-header {{ $profitText }}">Rp. {{
+                                        number_format($totalTerbayar, 0, ',', '.') }}
                                     </h5>
-                                    <span class="description-text">TOTAL REVENUE</span>
+                                    <span class="description-text">TOTAL PENDAPATAN</span>
                                 </div>
                                 <!-- /.description-block -->
                             </div>
                             <!-- /.col -->
-                            <div class="col-sm-3 col-6">
+                            <!-- /.col -->
+                            <div class="col-sm-4 col-6">
                                 <div class="description-block border-right">
-                                    <span class="description-percentage text-warning"><i class="fas fa-caret-left"></i>
-                                        0%</span>
-                                    <h5 class="description-header">$10,390.90</h5>
-                                    <span class="description-text">TOTAL COST</span>
+                                    @php
+                                    $bulan = now()->month();
+                                    // mengambil data order sesuai orderan di bulan tertentu
+                                    $totalBayarMonthly = \App\Models\Order::whereMonth('created_at', $bulan)->get();
+                                    $targetProfit_bulan = 100000000; // Ganti dengan nilai target profit yang diinginkan
+                                    $modal = 10000000;
+                                    $keuntungan = $totalTerbayar - $modal;
+                                    $persentaseKeuntungan = ($keuntungan / $targetProfit_bulan) * 100;
+                                    // icon persentase
+                                    $iconPersentase = ($keuntungan > 0)? 'fas fa-caret-up text-success' : 'fas
+                                    fa-caret-down text-danger';
+                                    $descPersentase = ($keuntungan > 0)? 'description-percentage text-success' :
+                                    'description-percentage text-danger';
+                                    $profitText = ($keuntungan > 0 )? 'text-success': 'text-danger';
+                                    @endphp
+                                    <span class="{{ $iconPersentase }}"><i class="{{ $descPersentase }}"></i>
+                                        {{ $persentaseKeuntungan }}%</span>
+                                    <h5 class="description-header {{ $profitText }}">
+                                        Rp. {{number_format($keuntungan,0,'.','.') }}</h5>
+                                    <span class="description-text">TOTAL KEUNTUNGAN</span>
                                 </div>
                                 <!-- /.description-block -->
                             </div>
                             <!-- /.col -->
-                            <div class="col-sm-3 col-6">
-                                <div class="description-block border-right">
-                                    <span class="description-percentage text-success"><i class="fas fa-caret-up"></i>
-                                        20%</span>
-                                    <h5 class="description-header">$24,813.53</h5>
-                                    <span class="description-text">TOTAL PROFIT</span>
-                                </div>
-                                <!-- /.description-block -->
-                            </div>
-                            <!-- /.col -->
-                            <div class="col-sm-3 col-6">
+                            <div class="col-sm-4 col-6">
                                 <div class="description-block">
                                     <span class="description-percentage text-danger"><i class="fas fa-caret-down"></i>
                                         18%</span>
                                     <h5 class="description-header">1200</h5>
-                                    <span class="description-text">GOAL COMPLETIONS</span>
+                                    <span class="description-text">PENCAPAIAN TARGET</span>
                                 </div>
                                 <!-- /.description-block -->
                             </div>
