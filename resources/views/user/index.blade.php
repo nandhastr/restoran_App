@@ -284,6 +284,7 @@
     </section><!-- End Portfolio Section -->
     <!--rating-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <style>
@@ -395,6 +396,16 @@
         .rated>label:hover~input:checked~label {
             color: #c59b08;
         }
+
+        .star--gold {
+        color: #FFD700; /* Warna kuning yang diinginkan */
+
+        }
+
+        .brdr {
+            border: 1px solid #000;
+            padding: 15px;
+        }
     </style>
     @if (!empty($value->star_rating))
         <div class="container">
@@ -461,8 +472,49 @@
                 </div>
             </div>
         </div>
-    @endif 
-    {{-- {{ $value }} --}}
+    @endif
+
+
+    {{-- rating view --}}
+    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+            @foreach($value as $index => $_)
+                <li data-target="#carouselExampleIndicators" data-slide-to="{{ $index }}" @if($index === 0) class="active" @endif></li>
+            @endforeach
+        </ol>
+        <div class="carousel-inner">
+            @foreach($value as $index => $item)
+                <div class="carousel-item @if($index === 0) active @endif">
+                    <div class="container brdr">
+                        <div class="well"> 
+                            <h3><a href="/reviews/{{ $item->comments }}">{{ $item->comments }}</a></h3>
+    
+                            @for($i = 0; $i < 5; $i++)
+                                @if($i < $item->star_rating)
+                                    <label class="star--gold" title="{{ $i }} stars">
+                                        <i class="fas fa-star"></i>
+                                    </label>
+                                @else
+                                    <label title="{{ $i }} stars">
+                                        <i class="fas fa-star"></i>
+                                    </label>
+                                @endif
+                            @endfor 
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon bg-dark" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <i class=""></i>
+        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+            <span class="carousel-control-next-icon bg-dark" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
     <!--end rating -->
 
 
