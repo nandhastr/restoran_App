@@ -23,6 +23,6 @@ class OrderDetail extends Model
     // // order detail memilki 1 paket saja
     public function Produk()
     {
-        return $this->belongsTo(Paket::class);
+        return $this->belongsTo(Produk::class);
     }
 }

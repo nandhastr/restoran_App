@@ -23,10 +23,19 @@
     <!-- Theme styles -->
     <link href="/css/dot-icons.css" rel="stylesheet" type="text/css">
     <link href="/css/theme.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <link
         href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
         rel="stylesheet">
     <script src="https://kit.fontawesome.com/5f52f05008.js" crossorigin="anonymous"></script>
+    <!--rating-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
     <!-- Vendor CSS Files -->
     <link href="assets/vendor/animate.css/animate.min.css" rel="stylesheet">
@@ -37,6 +46,10 @@
     <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
     <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
 
+
+    {{-- Alpine JS --}}
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="js/alpine.js"></script>
 
     <!-- Template Main CSS File -->
     <link href="assets/css/style.css" rel="stylesheet">
@@ -92,11 +105,161 @@
         .dropdown:hover .dropdown-content {
             display: block;
         }
+
+        .rate {
+            float: left;
+            height: 46px;
+            padding: 0 10px;
+        }
+
+        .rate:not(:checked)>input {
+            position: absolute;
+            display: none;
+        }
+
+        .rate:not(:checked)>label {
+            float: right;
+            width: 1em;
+            overflow: hidden;
+            white-space: nowrap;
+            cursor: pointer;
+            font-size: 30px;
+            color: #ccc;
+        }
+
+        .rated:not(:checked)>label {
+            float: right;
+            width: 1em;
+            overflow: hidden;
+            white-space: nowrap;
+            cursor: pointer;
+            font-size: 30px;
+            color: #ccc;
+        }
+
+        .rate:not(:checked)>label:before {
+            content: '★ ';
+        }
+
+        .rate>input:checked~label {
+            color: #ffc700;
+        }
+
+        .rate:not(:checked)>label:hover,
+        .rate:not(:checked)>label:hover~label {
+            color: #deb217;
+        }
+
+        .rate>input:checked+label:hover,
+        .rate>input:checked+label:hover~label,
+        .rate>input:checked~label:hover,
+        .rate>input:checked~label:hover~label,
+        .rate>label:hover~input:checked~label {
+            color: #c59b08;
+        }
+
+        .star-rating-complete {
+            color: #c59b08;
+        }
+
+        .rating-container .form-control:hover,
+        .rating-container .form-control:focus {
+            background: #fff;
+            border: 1px solid #ced4da;
+        }
+
+        .rating-container textarea:focus,
+        .rating-container input:focus {
+            color: #000;
+        }
+
+        .rated {
+            float: left;
+            height: 46px;
+            padding: 0 10px;
+        }
+
+        .rated:not(:checked)>input {
+            position: absolute;
+            display: none;
+        }
+
+        .rated:not(:checked)>label {
+            float: right;
+            width: 1em;
+            overflow: hidden;
+            white-space: nowrap;
+            cursor: pointer;
+            font-size: 30px;
+            color: #ffc700;
+        }
+
+        .rated:not(:checked)>label:before {
+            content: '★ ';
+        }
+
+        .rated>input:checked~label {
+            color: #ffc700;
+        }
+
+        .rated:not(:checked)>label:hover,
+        .rated:not(:checked)>label:hover~label {
+            color: #deb217;
+        }
+
+        .rated>input:checked+label:hover,
+        .rated>input:checked+label:hover~label,
+        .rated>input:checked~label:hover,
+        .rated>input:checked~label:hover~label,
+        .rated>label:hover~input:checked~label {
+            color: #c59b08;
+        }
+
+        .star--gold {
+            color: #FFD700;
+            /* Warna kuning yang diinginkan */
+
+        }
+
+        .brdr {
+            border: 1px solid #000;
+            padding: 15px;
+        }
+
+        .rate {
+            float: left;
+            height: 46px;
+            padding: 0 10px;
+        }
+
+        .rate:not(:checked)>input {
+            position: absolute;
+            display: none;
+        }
+
+        .rate:not(:checked)>label {
+            float: right;
+            width: 1em;
+            overflow: hidden;
+            white-space: nowrap;
+            cursor: pointer;
+            font-size: 30px;
+            color: #ccc;
+        }
+
+        .rated:not(:checked)>label {
+            float: right;
+            width: 1em;
+            overflow: hidden;
+            white-space: nowrap;
+            cursor: pointer;
+            font-size: 30px;
+            color: #ccc;
+        }
     </style>
 </head>
 
 <body class="body">
-
     <header class="header header-horizontal header-view-pannel">
         <div class="container">
             <nav class="navbar">
@@ -269,131 +432,6 @@
             </div>
     </section><!-- End Portfolio Section -->
     <!--rating-->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <style>
-        .rate {
-            float: left;
-            height: 46px;
-            padding: 0 10px;
-        }
-
-        .rate:not(:checked)>input {
-            position: absolute;
-            display: none;
-        }
-
-        .rate:not(:checked)>label {
-            float: right;
-            width: 1em;
-            overflow: hidden;
-            white-space: nowrap;
-            cursor: pointer;
-            font-size: 30px;
-            color: #ccc;
-        }
-
-        .rated:not(:checked)>label {
-            float: right;
-            width: 1em;
-            overflow: hidden;
-            white-space: nowrap;
-            cursor: pointer;
-            font-size: 30px;
-            color: #ccc;
-        }
-
-        .rate:not(:checked)>label:before {
-            content: '★ ';
-        }
-
-        .rate>input:checked~label {
-            color: #ffc700;
-        }
-
-        .rate:not(:checked)>label:hover,
-        .rate:not(:checked)>label:hover~label {
-            color: #deb217;
-        }
-
-        .rate>input:checked+label:hover,
-        .rate>input:checked+label:hover~label,
-        .rate>input:checked~label:hover,
-        .rate>input:checked~label:hover~label,
-        .rate>label:hover~input:checked~label {
-            color: #c59b08;
-        }
-
-        .star-rating-complete {
-            color: #c59b08;
-        }
-
-        .rating-container .form-control:hover,
-        .rating-container .form-control:focus {
-            background: #fff;
-            border: 1px solid #ced4da;
-        }
-
-        .rating-container textarea:focus,
-        .rating-container input:focus {
-            color: #000;
-        }
-
-        .rated {
-            float: left;
-            height: 46px;
-            padding: 0 10px;
-        }
-
-        .rated:not(:checked)>input {
-            position: absolute;
-            display: none;
-        }
-
-        .rated:not(:checked)>label {
-            float: right;
-            width: 1em;
-            overflow: hidden;
-            white-space: nowrap;
-            cursor: pointer;
-            font-size: 30px;
-            color: #ffc700;
-        }
-
-        .rated:not(:checked)>label:before {
-            content: '★ ';
-        }
-
-        .rated>input:checked~label {
-            color: #ffc700;
-        }
-
-        .rated:not(:checked)>label:hover,
-        .rated:not(:checked)>label:hover~label {
-            color: #deb217;
-        }
-
-        .rated>input:checked+label:hover,
-        .rated>input:checked+label:hover~label,
-        .rated>input:checked~label:hover,
-        .rated>input:checked~label:hover~label,
-        .rated>label:hover~input:checked~label {
-            color: #c59b08;
-        }
-
-        .star--gold {
-            color: #FFD700;
-            /* Warna kuning yang diinginkan */
-
-        }
-
-        .brdr {
-            border: 1px solid #000;
-            padding: 15px;
-        }
-    </style>
     @if (!empty($value->star_rating))
     <div class="container">
         <div class="row">
@@ -461,19 +499,19 @@
     {{-- rating view --}}
     <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
-            @foreach($value as $index => $_)
-            <li data-target="#carouselExampleIndicators" data-slide-to="{{ $index }}" @if($index===0) class="active"
+            @foreach ($value as $index => $_)
+            <li data-target="#carouselExampleIndicators" data-slide-to="{{ $index }}" @if ($index===0) class="active"
                 @endif></li>
             @endforeach
         </ol>
         <div class="carousel-inner">
-            @foreach($value as $index => $item)
-            <div class="carousel-item @if($index === 0) active @endif">
+            @foreach ($value as $index => $item)
+            <div class="carousel-item @if ($index === 0) active @endif">
                 <div class="container brdr">
                     <div class="well">
                         <h3><a href="/reviews/{{ $item->comments }}">{{ $item->comments }}</a></h3>
 
-                        @for($i = 0; $i < 5; $i++) @if($i < $item->star_rating)
+                        @for ($i = 0; $i < 5; $i++) @if ($i < $item->star_rating)
                             <label class="star--gold" title="{{ $i }} stars">
                                 <i class="fas fa-star"></i>
                             </label>
@@ -486,20 +524,20 @@
                     </div>
                 </div>
             </div>
-            @endforeach
         </div>
-        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-            <span class="carousel-control-prev-icon bg-dark" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-        </a>
-        <i class=""></i>
-        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-            <span class="carousel-control-next-icon bg-dark" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-        </a>
+        @endforeach
+    </div>
+    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon bg-dark" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+    <i class=""></i>
+    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+        <span class="carousel-control-next-icon bg-dark" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
     </div>
     <!--end rating -->
-
 
     <!-- jQuery library -->
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
@@ -552,9 +590,9 @@
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAJ4Qy67ZAILavdLyYV2ZwlShd0VAqzRXA&callback=initMap">
     </script>
     <script async defer src="https://ia.media-imdb.com/images/G/01/imdb/plugins/rating/js/rating.js"></script>
-</body>
-<script>
-    $(document).ready(function() {
+
+    <script>
+        $(document).ready(function() {
 
         var quantitiy = 0;
         $('.quantity-right-plus').click(function(e) {
@@ -588,6 +626,7 @@
         });
 
     });
-</script>
+    </script>
+</body>
 
 </html>
