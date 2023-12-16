@@ -219,6 +219,16 @@
             font-size: 30px;
             color: #ccc;
         }
+
+        .no-click {
+            pointer-events: none;
+        }
+
+        .bg-rating {
+            background-color:#e9edf0;
+            border-radius: 20px; /* Atur nilai border-radius sesuai preferensi Anda */
+            overflow: hidden;
+        }
     </style>
 </head>
 
@@ -419,7 +429,7 @@
         <div class="container">
             <div class="row">
                 <div class="col mt-4">
-                    <p class="font-weight-bold ">Review</p>
+                    <p class="font-weight-bold">Review</p>
                     <div class="form-group row">
                         <div class="col">
                             <div class="rated">
@@ -438,7 +448,8 @@
                 </div>
             </div>
         </div>
-    @else
+    @else 
+    {{-- START --}}
         <div class="container">
             <div class="row">
                 <div class="col mt-4">
@@ -473,7 +484,7 @@
                             </div>
                         </div>
                         <div class="mt-3 text-right">
-                            <button class="btn btn-sm py-2 px-3 btn-info">Submit
+                            <button class="btn btn-sm py-2 px-3 btn-dark">Submit
                             </button>
                         </div>
                     </form>
@@ -484,45 +495,63 @@
 
 
     {{-- rating view --}}
-    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-        <ol class="carousel-indicators">
-            @foreach ($value as $index => $_)
-                <li data-target="#carouselExampleIndicators" data-slide-to="{{ $index }}"
-                    @if ($index === 0) class="active" @endif></li>
-            @endforeach
-        </ol>
-        <div class="carousel-inner">
-            @foreach ($value as $index => $item)
-                <div class="carousel-item @if ($index === 0) active @endif">
-                    <div class="container brdr">
-                        <div class="well">
-                            <h3><a href="/reviews/{{ $item->comments }}">{{ $item->comments }}</a></h3>
+    <div class="row mt-5">
+        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators">
+                @foreach ($value as $index => $_)
+                    <li data-target="#carouselExampleIndicators" data-slide-to="{{ $index }}"
+                        @if ($index === 0) class="active" @endif></li>
+                @endforeach
+            </ol>
+            <div class="carousel-inner">
+                @foreach ($value as $index => $item)
+                    <div class="carousel-item @if ($index === 0) active @endif">
+                        {{-- START --}}
+                        <div class="container bg-rating">
+                            <div class="row">
+                                <div class="col mt-4">
+                                    <form class="py-2 px-4" style="box-shadow: 0 0 10px 0 #ddd;" 
+                                        method="POST" autocomplete="off">
+                                            <p class="font-weight-bold ">REVUEW CUSTOMER</p>
+                                                <div class="form-group row">
+                                                    <div class="col">
+                                                        @for ($i = 0; $i < 5; $i++)
+                                                            @if ($i < $item->star_rating)
+                                                                <label class="star--gold" title="{{ $i }} stars">
+                                                                    <i class="fas fa-star"></i>
+                                                                </label>
+                                                            @else
+                                                                <label title="{{ $i }} stars">
+                                                                    <i class="fas fa-star"></i>
+                                                                </label>
+                                                            @endif
+                                                        @endfor
 
-                            @for ($i = 0; $i < 5; $i++)
-                                @if ($i < $item->star_rating)
-                                    <label class="star--gold" title="{{ $i }} stars">
-                                        <i class="fas fa-star"></i>
-                                    </label>
-                                @else
-                                    <label title="{{ $i }} stars">
-                                        <i class="fas fa-star"></i>
-                                    </label>
-                                @endif
-                            @endfor
+                                                    </div>
+                                                </div>
+                                        {{-- comment --}}                                
+                                        <div class="">    
+                                        <textarea class="form-control text-left no-click" 
+                                            name="comment" rows="3" maxlength="200" readonly>{{ $item->comments }}
+                                        </textarea>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            @endforeach
+                @endforeach
+            </div>
+            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon bg-dark" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <i class=""></i>
+            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                <span class="carousel-control-next-icon bg-dark" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
         </div>
-        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-            <span class="carousel-control-prev-icon bg-dark" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-        </a>
-        <i class=""></i>
-        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-            <span class="carousel-control-next-icon bg-dark" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-        </a>
     </div>
     <!--end rating -->
 
