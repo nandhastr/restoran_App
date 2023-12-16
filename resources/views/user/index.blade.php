@@ -23,6 +23,10 @@
     <!-- Theme styles -->
     <link href="/css/dot-icons.css" rel="stylesheet" type="text/css">
     <link href="/css/theme.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <link
         href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
         rel="stylesheet">
@@ -37,6 +41,9 @@
     <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
     <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
 
+    {{-- Alpine JS --}}
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="js/alpine.js"></script>
 
     <!-- Template Main CSS File -->
     <link href="assets/css/style.css" rel="stylesheet">
@@ -91,212 +98,6 @@
 
         .dropdown:hover .dropdown-content {
             display: block;
-        }
-    </style>
-</head>
-
-<body class="body">
-
-    <header class="header header-horizontal header-view-pannel">
-        <div class="container">
-            <nav class="navbar">
-
-
-
-
-                {{-- @if (!Auth::check())
-        <a class="nav-link text-decoration-none text-white" href="/login">Login</a>
-        @else --}}
-
-
-                <div class="navbar-collapse pt-4">
-                    <div class="navbar-extra">
-                        @guest
-                            @if (Route::has('login'))
-                                <a class="btn-theme btn" style="background-color: #395B64; border-radius: 15px"
-                                    href="{{ route('login') }}">{{ __('Login') }}</a>&nbsp;
-                            @endif
-                        @else
-                            <a class="btn-theme btn" style="background-color: #395B64; border-radius: 15px"
-                                href="{{ route('logout') }}"
-                                onclick="event.preventDefault();
-                            document.getElementById('logout-form').submit();">Logout</a>&nbsp;
-
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                @csrf
-                            </form>
-
-                            @if (Auth::user()->role == 'client')
-                                <a type="button" class="btn-theme btn position-relative mr-4"
-                                    style="background-color: #395B64; border-radius: 15px; color: white; height: 55px; padding-top: 10px">
-                                    <h2><i class="bx bx-cart" style="font-size: 24px;"></i></h2>
-                                    <span
-                                        class="position-absolute top-0 start-100 translate-middle badge rounded-pill badge-danger">
-                                        0
-                                    </span>
-                                </a>&nbsp;
-                            @elseif(Auth::user()->role == 'kasir')
-                                <a class="btn-theme btn mr-3 text-light"
-                                    style="background-color: #395B64; border-radius: 15px"
-                                    href="{{ route('order.index') }}">Order</a>
-                            @else
-                                <a class="btn-theme btn mr-3 text-light"
-                                    style="background-color: #395B64; border-radius: 15px"
-                                    href="{{ route('manager.index') }}">Dashboard</a>
-                            @endif
-                        @endguest
-
-
-                        <a class="btn-theme btn mr-3 text-light" style="background-color: #395B64; border-radius: 15px"
-                            href="{{ route('client.home') }}">Kembali</a>
-                    </div>
-                </div>
-            </nav>
-        </div>
-    </header>
-    <br><br><br>
-
-    <h2 align="center">Our Menu</h2>
-
-    <!-- ======= Portfolio Section ======= -->
-    <section id="portfolio" class="portfolio">
-        <div class="container">
-
-            <div class="row">
-                <div class="col-lg-12 d-flex justify-content-center">
-                    <ul id="portfolio-flters">
-                        <li data-filter="*" class="filter-active">All</li>
-                        <li data-filter=".filter-1">Desserts</li>
-                        <li data-filter=".filter-2">Drinks</li>
-                        <li data-filter=".filter-3">Maincourse</li>
-                        <li data-filter=".filter-4">Snack</li>
-                    </ul>
-                </div>
-            </div>
-
-
-            <div class="row portfolio-container" style="padding-left: 10%">
-                @foreach ($Produk as $d)
-                    <div class="col-lg-2 col-md-6 portfolio-item filter-{{ $d->kategori_produks }} "
-                        style="background-color: #222831; padding: 0px; border-radius: 20px; margin-left: 10px;">
-                        <img class="card-img-top" src="{{ asset('uploads/' . $d->gambar_produks) }}" alt="Card image"
-                            style="border-radius: 20px 20px 0 0; width: 100%; height: 200px; object-fit: cover;">
-                        <div class="card-body" style="color: white; padding: 8px; height: 125px; overflow: hidden;">
-                            <h4 class="card-title" style="font-size: 20px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ $d->nama_produks }}</h4>
-                            <p class="card-text" style="font-size: 14px;">Rp.{{ $d->harga_produks }}</p>
-                            <a class="btn btn-warning btn-sm" data-toggle="modal" data-target="#exampleModals{{ $d->id_produks }}"
-                                title="App 1">Lihat Produk</a>
-                            <a class="btn btn-success btn-sm" data-toggle="modal" data-target="#exampleModal{{ $d->id_produks }}"
-                                title="App 1">Order <i class="bx bx-cart"></i></a>
-
-                        </div>
-                    </div>
-
-                    <div class="modal fade" id="exampleModals{{ $d->id_produks }}" tabindex="-1" role="dialog"
-                        aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content card" style="max-width: 300px; background-color:#222831;">
-                                <img class="card-img-top" src="{{ asset('uploads/' . $d->gambar_produks) }}" alt="Card image"
-                                    style="width: 100%; border-radius: 10px 10px 0 0; max-height: 360px; object-fit: cover;">
-                                <div class="modal-body" align="center" style="padding: 15px;">
-                                    <h4 class="card-title text-white" style="font-size: 14px;">{{ $d->nama_produks }}</h4>
-                                    <p class="card-text text-white" style="font-size: 12px;"><b>Harga: </b>Rp.{{ $d->harga_produks }}</p>
-                                    <p class="card-text text-white" style="font-size: 12px;"><b>Deskripsi: </b> </p>
-                                    <p class="card-text text-white" style="font-size: 12px;">{{ $d->deskripsi_produks }}</p>
-                                    <p class="card-text text-white" style="font-size: 12px;"><b>Stok: </b> {{ $d->stok_produks }}</p>
-                                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">OK</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-
-                    <div class="modal fade" id="exampleModal{{ $d->id_produks }}" tabindex="-1" role="dialog"
-                            aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-lg" role="document">
-                                <div class="modal-content" style="background-color:#222831">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title text-white" id="exampleModalLabel">Pembelian Barang</h5>
-                                        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-
-                                    <div class="modal-body">
-                                        <div class="row">
-                                            <label class="col-sm-3 text-white">Kuantitas </label>
-                                            <div class="col-sm-6">
-                                                <div class="input-group ">
-                                                    <span class="input-group-btn">
-                                                        <button type="button" class="quantity-left-minus btn  btn-number text-white" data-type="minus"
-                                                            data-field="">
-                                                            <i class="bx bx-minus text-white"></i>
-                                                        </button>
-                                                    </span>
-                                                    <input type="number" id="quantity" name="jumlah" class="form-control input-number"
-                                                        value="1" min="1" max="100">
-                                                    <input type="hidden" id="id_produk" name="id_produk" value="{{ $d->id_produks }}">
-                                                    <span class="input-group-btn">
-                                                        <button type="button" class="quantity-right-plus btn  btn-number text-white" data-type="plus"
-                                                            data-field="">
-                                                            <i class="bx bx-plus"></i>
-                                                        </button>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                            <label class="col-sm-3 text-white">Tersisa: {{ $d->stok_produks }} Buah</label>
-                                        </div>
-                                    </div>
-
-                                    <div class="modal-footer">
-                                        <input type="hidden" name="user_id" id="user_id" value="{{ Auth::user()->id }}">
-                                        <input type="hidden" name="harga" id="harga" value="{{ $d->harga_produks }}">
-                                        <button type="submit" class="btn btn-secondary">Beli Sekarang</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                @endforeach
-
-            </div>
-    </section><!-- End Portfolio Section -->
-    <!--rating-->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <style>
-        .rate {
-            float: left;
-            height: 46px;
-            padding: 0 10px;
-        }
-
-        .rate:not(:checked)>input {
-            position: absolute;
-            display: none;
-        }
-
-        .rate:not(:checked)>label {
-            float: right;
-            width: 1em;
-            overflow: hidden;
-            white-space: nowrap;
-            cursor: pointer;
-            font-size: 30px;
-            color: #ccc;
-        }
-
-        .rated:not(:checked)>label {
-            float: right;
-            width: 1em;
-            overflow: hidden;
-            white-space: nowrap;
-            cursor: pointer;
-            font-size: 30px;
-            color: #ccc;
         }
 
         .rate:not(:checked)>label:before {
@@ -378,7 +179,8 @@
         }
 
         .star--gold {
-        color: #FFD700; /* Warna kuning yang diinginkan */
+            color: #FFD700;
+            /* Warna kuning yang diinginkan */
 
         }
 
@@ -386,7 +188,233 @@
             border: 1px solid #000;
             padding: 15px;
         }
+
+        .rate {
+            float: left;
+            height: 46px;
+            padding: 0 10px;
+        }
+
+        .rate:not(:checked)>input {
+            position: absolute;
+            display: none;
+        }
+
+        .rate:not(:checked)>label {
+            float: right;
+            width: 1em;
+            overflow: hidden;
+            white-space: nowrap;
+            cursor: pointer;
+            font-size: 30px;
+            color: #ccc;
+        }
+
+        .rated:not(:checked)>label {
+            float: right;
+            width: 1em;
+            overflow: hidden;
+            white-space: nowrap;
+            cursor: pointer;
+            font-size: 30px;
+            color: #ccc;
+        }
     </style>
+</head>
+
+<body class="body">
+
+    <header class="header header-horizontal header-view-pannel">
+        <div class="container">
+            <nav class="navbar">
+
+
+
+                <div class="navbar-collapse pt-4">
+                    <div class="navbar-extra">
+                        @guest
+                            @if (Route::has('login'))
+                                <a class="btn-theme btn" style="background-color: #395B64; border-radius: 15px"
+                                    href="{{ route('login') }}">{{ __('Login') }}</a>&nbsp;
+                            @endif
+                        @else
+                            <a class="btn-theme btn" style="background-color: #395B64; border-radius: 15px"
+                                href="{{ route('logout') }}"
+                                onclick="event.preventDefault();
+                            document.getElementById('logout-form').submit();">Logout</a>&nbsp;
+
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                @csrf
+                            </form>
+
+                            @if (Auth::user()->role == 'client')
+                                <a type="button" href="{{ route('listChart') }}"
+                                    class="btn-theme btn position-relative mr-4"
+                                    style="background-color: #395B64; border-radius: 15px; color: white; height: 55px; padding-top: 10px">
+                                    <h2><i class="bx bx-cart" style="font-size: 24px;"></i></h2>
+                                    <span
+                                        class="position-absolute top-0 start-100 translate-middle badge rounded-pill badge-danger">
+                                        {{ Cart::count() }}
+                                    </span>
+                                </a>&nbsp;
+                            @elseif(Auth::user()->role == 'kasir')
+                                <a class="btn-theme btn mr-3 text-light"
+                                    style="background-color: #395B64; border-radius: 15px"
+                                    href="{{ route('order.index') }}">Order</a>
+                            @else
+                                <a class="btn-theme btn mr-3 text-light"
+                                    style="background-color: #395B64; border-radius: 15px"
+                                    href="{{ route('manager.index') }}">Dashboard</a>
+                            @endif
+                        @endguest
+
+
+                        <a class="btn-theme btn mr-3 text-light" style="background-color: #395B64; border-radius: 15px"
+                            href="{{ route('client.home') }}">Kembali</a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+    <br><br><br>
+
+    <h2 align="center">Our Menu</h2>
+
+    <!-- ======= Portfolio Section ======= -->
+    <section id="portfolio" class="portfolio">
+        <div class="container">
+
+            <div class="row">
+                <div class="col-lg-12 d-flex justify-content-center">
+                    <ul id="portfolio-flters">
+                        <li data-filter="*" class="filter-active">All</li>
+                        <li data-filter=".filter-1">Desserts</li>
+                        <li data-filter=".filter-2">Drinks</li>
+                        <li data-filter=".filter-3">Maincourse</li>
+                        <li data-filter=".filter-4">Snack</li>
+                    </ul>
+                </div>
+            </div>
+
+
+            <div class="row portfolio-container" style="padding-left: 10%">
+                @foreach ($produk as $d)
+                    <form action="{{ route('order.store') }}" method="post">
+                        @csrf
+                        <div class="col-lg-3 col-md-6 portfolio-item filter-{{ $d->nama_kategori }} "
+                            style="background-color:#222831;padding:0px;border-radius:30px;margin-left:30px;">
+                            <img class="card-img-top" src="{{ asset('uploads/' . $d->gambar_produks) }}"
+                                alt="Card image" style="border-radius:30px 30px 0px 50px">
+                            <div class="card-body" style="color:white;padding:30px;">
+                                <h4 class="card-title">{{ $d->nama_produks }}</h4>
+                                <p class="card-text">@currency($d->harga_produks) </p>
+
+
+                                <a class="btn btn-warning" data-toggle="modal"
+                                    data-target="#exampleModals{{ $d->id_produks }}" title="App 1">Lihat Produk</a>
+                                <a class="btn btn-success" data-toggle="modal"
+                                    data-target="#exampleModal{{ $d->id_produks }}" title="App 1">Order <i
+                                        class="bx bx-cart"></i></a>
+                            </div>
+                        </div>
+                        <div class="modal fade" id="exampleModals{{ $d->id_produks }}" tabindex="-1"
+                            role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog " r ole="document">
+                                <div class="modal-content card" style="background-color:#E7F6F2">
+                                    <img class="card-img-top" src="{{ asset('uploads/' . $d->gambar_produks) }}"
+                                        alt="Card image">
+                                    <div class="card-body" align="center">
+                                        <h4 class="card-title">{{ $d->nama_produks }}</h4>
+                                        <input type="hidden" name="product_name" id="product_name"
+                                            value="{{ $d->nama_produks }}">
+                                        <p class="card-text"><b>Harga: </b> @currency($d->harga_produks) </p>
+                                        <p class="card-text"><b>Deskripsi: </b> </p>
+                                        <p class="card-text">{{ $d->deskripsi_produks }}</p>
+                                        <p class="card-text"><b>stok produks: </b> {{ $d->stok_produks }}</p>
+
+                                        <button type="button" class="btn btn-secondary"
+                                            data-dismiss="modal">OK</button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal fade" id="exampleModal{{ $d->id_produks }}" tabindex="-1" role="dialog"
+                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-lg" role="document">
+                                <div class="modal-content" style="background-color:#222831">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title text-white" id="exampleModalLabel">Pembelian Barang
+                                        </h5>
+                                        <button type="button" class="close text-white" data-dismiss="modal"
+                                            aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <label class="col-sm-3 text-white">Kuantitas </label>
+                                            <div class="col-sm-6">
+                                                <div class="input-group ">
+                                                    <span class="input-group-btn">
+                                                        <button type="button"
+                                                            class="quantity-left-minus btn  btn-number text-white"
+                                                            data-type="minus" data-field="">
+                                                            <i class="bx bx-minus text-white"></i>
+                                                        </button>
+                                                    </span>
+                                                    <input type="number" id="quantity" name="jumlah"
+                                                        class="form-control input-number" value="1"
+                                                        min="1" max="100">
+                                                    <input type="hidden" id="id_produk" name="id_produk"
+                                                        value="{{ $d->id_produks }}">
+                                                    <span class="input-group-btn">
+                                                        <button type="button"
+                                                            class="quantity-right-plus btn  btn-number text-white"
+                                                            data-type="plus" data-field="">
+                                                            <i class="bx bx-plus"></i>
+                                                        </button>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <label class="col-sm-3 text-white">Tersisa: {{ $d->stok_produks }}
+                                                Buah</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="modal-footer">
+
+                                        <input type="hidden" name="user_id" id="user_id"
+                                            value="{{ Auth::user()->id }}">
+                                        <input type="hidden" name="harga" id="harga"
+                                            value="{{ $d->harga_produks }}">
+
+                                        {{-- <button type="submit" class="btn btn-secondary">Beli Sekarang</button> --}}
+
+                                        {{-- <input type="submit" class="btn btn-primary" value="Masukan Keranjang"> --}}
+                                        {{-- <a class="btn btn-primary">Masukkan Keranjang</a> --}}
+
+                                        <button type="submit" class="btn btn-secondary" name="action"
+                                            value="buy_now">Buy
+                                            Now</button>
+                                        {{-- <input type="submit" class="btn btn-primary" value="Masukan Keranjang"> --}}
+                                        <button type="submit" class="btn btn-primary" name="action"
+                                            value="add_to_cart">Add to
+                                            Cart</button>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                @endforeach
+
+            </div>
+    </section><!-- End Portfolio Section -->
+    <!--rating-->
+
     @if (!empty($value->star_rating))
         <div class="container">
             <div class="row">
@@ -458,19 +486,20 @@
     {{-- rating view --}}
     <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
-            @foreach($value as $index => $_)
-                <li data-target="#carouselExampleIndicators" data-slide-to="{{ $index }}" @if($index === 0) class="active" @endif></li>
+            @foreach ($value as $index => $_)
+                <li data-target="#carouselExampleIndicators" data-slide-to="{{ $index }}"
+                    @if ($index === 0) class="active" @endif></li>
             @endforeach
         </ol>
         <div class="carousel-inner">
-            @foreach($value as $index => $item)
-                <div class="carousel-item @if($index === 0) active @endif">
+            @foreach ($value as $index => $item)
+                <div class="carousel-item @if ($index === 0) active @endif">
                     <div class="container brdr">
-                        <div class="well"> 
+                        <div class="well">
                             <h3><a href="/reviews/{{ $item->comments }}">{{ $item->comments }}</a></h3>
-    
-                            @for($i = 0; $i < 5; $i++)
-                                @if($i < $item->star_rating)
+
+                            @for ($i = 0; $i < 5; $i++)
+                                @if ($i < $item->star_rating)
                                     <label class="star--gold" title="{{ $i }} stars">
                                         <i class="fas fa-star"></i>
                                     </label>
@@ -479,7 +508,7 @@
                                         <i class="fas fa-star"></i>
                                     </label>
                                 @endif
-                            @endfor 
+                            @endfor
                         </div>
                     </div>
                 </div>
@@ -496,7 +525,6 @@
         </a>
     </div>
     <!--end rating -->
-
 
     <!-- jQuery library -->
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
