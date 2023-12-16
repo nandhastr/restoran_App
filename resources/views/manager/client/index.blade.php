@@ -59,9 +59,12 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @php
+                            $no = 1;
+                        @endphp
                         @foreach ($user as $row)
                         <tr>
-                            <td>{{$loop->iteration}}</td>
+                            <td>{{$no++}}</td>
                             <td>{{$row->name}}</td>
                             <td>{{$row->email}}</td>
                             <td>{{$row->phone}}</td>
