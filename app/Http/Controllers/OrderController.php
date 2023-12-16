@@ -24,6 +24,8 @@ class OrderController extends Controller
         // menampilkan list yang order dari users yang login
         $orders = Order::with(['OrderDetail', 'User'])->get();
         $cartItems = Cart::content();
+
+        // return  $orders;
         return view('order.index', compact('orders', 'cartItems'));
     }
 
