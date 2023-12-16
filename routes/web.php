@@ -34,7 +34,12 @@ Route::get('/client', [UserController::class, 'index'])->name('client.index');
 
 // Client rating
 Route::get('/rating', [RatingController::class, 'index'])->name('rating.index');
+Route::get('/rating/{rating}/edit', [RatingController::class, 'edit'])->name('rating.edit');
+Route::get('/rating/{rating}/update', [RatingController::class, 'update'])->name('rating.update');
 Route::get('/rating/{rating}/delete', [RatingController::class, 'destroy'])->name('deleteRating');
+//rating v2
+Route::post('review-store', [UserController::class, 'reviewstore'])->name('review.store');
+
 
 // Route Kasir
 Route::get('/order', [OrderController::class, 'index'])->name('order.index');
@@ -55,10 +60,11 @@ Route::get('/manager', [ManagerController::class, 'index'])->name('manager.index
 // Manager CRUD Client
 Route::get('/manager/client', [ClientController::class, 'index'])->name('manager.client.index');
 Route::get('/manager/client/add', [ClientController::class, 'create'])->name('manager.client.create');
-Route::post('manager/client/store', [ClientController::class, 'store'])->name('manager.client.store');
+Route::post('manager/client/store', [ClientController::class, 'store'])->name('manager.client.store-p');
 Route::get('/manager/{clients}/edit', [ClientController::class, 'edit'])->name('manager.client.edit');
 Route::post('/manager/{clients}/update', [ClientController::class, 'update'])->name('manager.client.update');
 Route::get('/manager/{clients}/delete', [ClientController::class, 'destroy'])->name('manager.client.delete');
+
 
 // Manager CRUD Product
 Route::get('/manager/produk', [ProdukController::class, 'index'])->name('produk.index');
