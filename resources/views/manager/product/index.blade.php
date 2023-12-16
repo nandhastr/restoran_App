@@ -71,7 +71,7 @@
 
                             <td>{{ $row->nama_produks }}</td>
                             <td>{{ $row->kategori_produks }}</td>
-                            <td>{{ $row->harga_produks }}</td>
+                            <td> @currency($row->harga_produks)</td>
                             <td>{{ $row->stok_produks }}</td>
                             <td>{{ $row->deskripsi_produks }}</td>
 

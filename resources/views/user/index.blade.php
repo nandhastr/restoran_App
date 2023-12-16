@@ -37,6 +37,9 @@
     <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
     <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
 
+    {{-- Alpine JS --}}
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="js/alpine.js"></script>
 
     <!-- Template Main CSS File -->
     <link href="assets/css/style.css" rel="stylesheet">
@@ -100,10 +103,6 @@
     <header class="header header-horizontal header-view-pannel">
         <div class="container">
             <nav class="navbar">
-
-
-
-
                 {{-- @if (!Auth::check())
         <a class="nav-link text-decoration-none text-white" href="/login">Login</a>
         @else --}}
@@ -127,12 +126,12 @@
                             </form>
 
                             @if (Auth::user()->role == 'client')
-                                <a type="button" class="btn-theme btn position-relative mr-4"
+                                <a type="button" href="{{ route('listChart') }}" class="btn-theme btn position-relative mr-4"
                                     style="background-color: #395B64; border-radius: 15px; color: white; height: 55px; padding-top: 10px">
                                     <h2><i class="bx bx-cart" style="font-size: 24px;"></i></h2>
                                     <span
                                         class="position-absolute top-0 start-100 translate-middle badge rounded-pill badge-danger">
-                                        0
+                                        {{ Cart::count() }}
                                     </span>
                                 </a>&nbsp;
                             @elseif(Auth::user()->role == 'kasir')
@@ -184,7 +183,7 @@
                                 alt="Card image" style="border-radius:30px 30px 0px 50px">
                             <div class="card-body" style="color:white;padding:30px;">
                                 <h4 class="card-title">{{ $d->nama_produks }}</h4>
-                                <p class="card-text">Rp {{ $d->harga_produks }}</p>
+                                <p class="card-text">@currency($d->harga_produks) </p>
 
 
                                 <a class="btn btn-warning" data-toggle="modal"
@@ -204,7 +203,8 @@
                                         alt="Card image">
                                     <div class="card-body" align="center">
                                         <h4 class="card-title">{{ $d->nama_produks }}</h4>
-                                        <p class="card-text"><b>Harga: </b> {{ $d->harga_produks }}</p>
+                                        <input type="hidden" name="product_name" id="product_name" value="{{ $d->nama_produks  }}">
+                                        <p class="card-text"><b>Harga: </b> @currency($d->harga_produks) </p>
                                         <p class="card-text"><b>Deskripsi: </b> </p>
                                         <p class="card-text">{{ $d->deskripsi_produks }}</p>
                                         <p class="card-text"><b>stok_produks: </b> {{ $d->stok_produks }}</p>
@@ -267,11 +267,17 @@
 
                                         <input type="hidden" name="user_id" id="user_id"
                                             value="{{ Auth::user()->id }}">
-                                        <input type="hidden" name="harga" id="harga" value="{{ $d->harga_produks }}">
+                                        <input type="hidden" name="harga" id="harga"
+                                            value="{{ $d->harga_produks }}">
 
-                                        <button type="submit" class="btn btn-secondary">Beli Sekarang</button>
+                                        {{-- <button type="submit" class="btn btn-secondary">Beli Sekarang</button> --}}
 
-                                        <input type="submit" class="btn btn-primary" value="Masukan Keranjang">
+                                        {{-- <input type="submit" class="btn btn-primary" value="Masukan Keranjang"> --}}
+                                        {{-- <a class="btn btn-primary">Masukkan Keranjang</a> --}}
+
+                                        <button type="submit" class="btn btn-secondary" name="action" value="buy_now">Buy Now</button>
+                                        {{-- <input type="submit" class="btn btn-primary" value="Masukan Keranjang"> --}}
+                                        <button type="submit" class="btn btn-primary" name="action" value="add_to_cart">Add to Cart</button>
                                     </div>
                                 </div>
                             </div>
@@ -282,16 +288,6 @@
             </div>
     </section><!-- End Portfolio Section -->
 
-
-
-    <a class="scroll-top disabled" href="#"><i class="fas fa-angle-up" aria-hidden="true"></i></a>
-    <footer class="flex-shrink-0 section-text-white footer footer-links">
-
-        <div class="footer-copy">
-            <div class="container text-white-50"><strong>&copy; </strong>
-                All rights reserved.</div>
-        </div>
-    </footer>
 
     <!-- jQuery library -->
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
