@@ -62,9 +62,11 @@ class RatingController extends Controller
      * @param  \App\Models\Rating  $rating
      * @return \Illuminate\Http\Response
      */
-    public function edit(Rating $rating)
+    public function edit($user_name)
     {
         //
+        $rating = Rating::all();
+        return \view('rating.edit', compact('rating'));
     }
 
     /**

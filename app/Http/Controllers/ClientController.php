@@ -141,15 +141,20 @@ class ClientController extends Controller
      * @param  \App\Models\User  $client
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $client)
+    public function destroy($clients)
     {
+        $client = User::find($clients);
+
+        if (!$client) {
+            return redirect()->route('manager.client.index')->with('failed', 'Data tidak ditemukan');
+        }
+
         $delete = $client->delete();
 
         if ($delete) {
-
-            return redirect()->route('manager.client.index')->with('success', 'Data Berhasil di Hapus');
+            return redirect()->route('manager.client.index')->with('success', 'Data berhasil dihapus');
         } else {
-            return redirect()->route('manager.client.index')->with('failed', 'Data Gagal Dihapus');
+            return redirect()->route('manager.client.index')->with('failed', 'Data gagal dihapus');
         }
     }
 }
