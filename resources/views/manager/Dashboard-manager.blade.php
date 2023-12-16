@@ -98,12 +98,12 @@
         </div>
         <!-- /.row -->
         <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header">
+            <div class="col-md-12 ">
+                <div class="card ">
+                    <div class="card-header bg-info">
                         <h5 class="card-title">Monthly Recap Report</h5>
                     </div>
-                    <div class="card-header">
+                    <div class="card-header bg-info">
                         @php
                         $bulan = now()->month; // Mengambil bulan saat ini
                         $salesMonthly = \App\Models\Order::whereMonth('created_at', $bulan)->get();
@@ -115,7 +115,7 @@
 
                     </div>
                     <!-- /.card-header -->
-                    <div class="card-body">
+                    <div class="card-body bg-info">
                         <div class="row">
                             <div class="col">
                                 <p class="text-center">
@@ -181,7 +181,7 @@
                         <!-- /.row -->
                     </div>
                     <!-- ./card-body -->
-                    <div class="card-footer">
+                    <div class="card-footer bg-dark bg-opacity-100">
                         <div class="row">
                             <div class="col-sm-4 col-6">
                                 <div class="description-block border-right">
