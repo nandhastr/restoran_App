@@ -99,7 +99,8 @@
         .dropdown:hover .dropdown-content {
             display: block;
         }
-         .rate:not(:checked)>label:before {
+
+        .rate:not(:checked)>label:before {
             content: '★ ';
         }
 
@@ -178,7 +179,8 @@
         }
 
         .star--gold {
-        color: #FFD700; /* Warna kuning yang diinginkan */
+            color: #FFD700;
+            /* Warna kuning yang diinginkan */
 
         }
 
@@ -186,7 +188,8 @@
             border: 1px solid #000;
             padding: 15px;
         }
-         .rate {
+
+        .rate {
             float: left;
             height: 46px;
             padding: 0 10px;
@@ -224,9 +227,7 @@
     <header class="header header-horizontal header-view-pannel">
         <div class="container">
             <nav class="navbar">
-                {{-- @if (!Auth::check())
-        <a class="nav-link text-decoration-none text-white" href="/login">Login</a>
-        @else --}}
+
 
 
                 <div class="navbar-collapse pt-4">
@@ -247,7 +248,8 @@
                             </form>
 
                             @if (Auth::user()->role == 'client')
-                                <a type="button" href="{{ route('listChart') }}" class="btn-theme btn position-relative mr-4"
+                                <a type="button" href="{{ route('listChart') }}"
+                                    class="btn-theme btn position-relative mr-4"
                                     style="background-color: #395B64; border-radius: 15px; color: white; height: 55px; padding-top: 10px">
                                     <h2><i class="bx bx-cart" style="font-size: 24px;"></i></h2>
                                     <span
@@ -315,24 +317,20 @@
                                         class="bx bx-cart"></i></a>
                             </div>
                         </div>
-
-
-                        </div>
-                    </div>
-
                         <div class="modal fade" id="exampleModals{{ $d->id_produks }}" tabindex="-1"
                             role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog " role="document">
+                            <div class="modal-dialog " r ole="document">
                                 <div class="modal-content card" style="background-color:#E7F6F2">
                                     <img class="card-img-top" src="{{ asset('uploads/' . $d->gambar_produks) }}"
                                         alt="Card image">
                                     <div class="card-body" align="center">
                                         <h4 class="card-title">{{ $d->nama_produks }}</h4>
-                                        <input type="hidden" name="product_name" id="product_name" value="{{ $d->nama_produks  }}">
+                                        <input type="hidden" name="product_name" id="product_name"
+                                            value="{{ $d->nama_produks }}">
                                         <p class="card-text"><b>Harga: </b> @currency($d->harga_produks) </p>
                                         <p class="card-text"><b>Deskripsi: </b> </p>
                                         <p class="card-text">{{ $d->deskripsi_produks }}</p>
-                                        <p class="card-text"><b>stok_produks: </b> {{ $d->stok_produks }}</p>
+                                        <p class="card-text"><b>stok produks: </b> {{ $d->stok_produks }}</p>
 
                                         <button type="button" class="btn btn-secondary"
                                             data-dismiss="modal">OK</button>
@@ -341,17 +339,16 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-
-
-                    <div class="modal fade" id="exampleModal{{ $d->id_produks }}" tabindex="-1" role="dialog"
+                        <div class="modal fade" id="exampleModal{{ $d->id_produks }}" tabindex="-1" role="dialog"
                             aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-lg" role="document">
                                 <div class="modal-content" style="background-color:#222831">
                                     <div class="modal-header">
-                                        <h5 class="modal-title text-white" id="exampleModalLabel">Pembelian Barang</h5>
-                                        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                                        <h5 class="modal-title text-white" id="exampleModalLabel">Pembelian Barang
+                                        </h5>
+                                        <button type="button" class="close text-white" data-dismiss="modal"
+                                            aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
@@ -362,23 +359,28 @@
                                             <div class="col-sm-6">
                                                 <div class="input-group ">
                                                     <span class="input-group-btn">
-                                                        <button type="button" class="quantity-left-minus btn  btn-number text-white" data-type="minus"
-                                                            data-field="">
+                                                        <button type="button"
+                                                            class="quantity-left-minus btn  btn-number text-white"
+                                                            data-type="minus" data-field="">
                                                             <i class="bx bx-minus text-white"></i>
                                                         </button>
                                                     </span>
-                                                    <input type="number" id="quantity" name="jumlah" class="form-control input-number"
-                                                        value="1" min="1" max="100">
-                                                    <input type="hidden" id="id_produk" name="id_produk" value="{{ $d->id_produks }}">
+                                                    <input type="number" id="quantity" name="jumlah"
+                                                        class="form-control input-number" value="1"
+                                                        min="1" max="100">
+                                                    <input type="hidden" id="id_produk" name="id_produk"
+                                                        value="{{ $d->id_produks }}">
                                                     <span class="input-group-btn">
-                                                        <button type="button" class="quantity-right-plus btn  btn-number text-white" data-type="plus"
-                                                            data-field="">
+                                                        <button type="button"
+                                                            class="quantity-right-plus btn  btn-number text-white"
+                                                            data-type="plus" data-field="">
                                                             <i class="bx bx-plus"></i>
                                                         </button>
                                                     </span>
                                                 </div>
                                             </div>
-                                            <label class="col-sm-3 text-white">Tersisa: {{ $d->stok_produks }} Buah</label>
+                                            <label class="col-sm-3 text-white">Tersisa: {{ $d->stok_produks }}
+                                                Buah</label>
                                         </div>
                                     </div>
 
@@ -394,9 +396,13 @@
                                         {{-- <input type="submit" class="btn btn-primary" value="Masukan Keranjang"> --}}
                                         {{-- <a class="btn btn-primary">Masukkan Keranjang</a> --}}
 
-                                        <button type="submit" class="btn btn-secondary" name="action" value="buy_now">Buy Now</button>
+                                        <button type="submit" class="btn btn-secondary" name="action"
+                                            value="buy_now">Buy
+                                            Now</button>
                                         {{-- <input type="submit" class="btn btn-primary" value="Masukan Keranjang"> --}}
-                                        <button type="submit" class="btn btn-primary" name="action" value="add_to_cart">Add to Cart</button>
+                                        <button type="submit" class="btn btn-primary" name="action"
+                                            value="add_to_cart">Add to
+                                            Cart</button>
 
                                     </div>
                                 </div>
@@ -408,8 +414,8 @@
             </div>
     </section><!-- End Portfolio Section -->
     <!--rating-->
-    
-     @if (!empty($value->star_rating))
+
+    @if (!empty($value->star_rating))
         <div class="container">
             <div class="row">
                 <div class="col mt-4">
@@ -480,19 +486,20 @@
     {{-- rating view --}}
     <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
-            @foreach($value as $index => $_)
-                <li data-target="#carouselExampleIndicators" data-slide-to="{{ $index }}" @if($index === 0) class="active" @endif></li>
+            @foreach ($value as $index => $_)
+                <li data-target="#carouselExampleIndicators" data-slide-to="{{ $index }}"
+                    @if ($index === 0) class="active" @endif></li>
             @endforeach
         </ol>
         <div class="carousel-inner">
-            @foreach($value as $index => $item)
-                <div class="carousel-item @if($index === 0) active @endif">
+            @foreach ($value as $index => $item)
+                <div class="carousel-item @if ($index === 0) active @endif">
                     <div class="container brdr">
-                        <div class="well"> 
+                        <div class="well">
                             <h3><a href="/reviews/{{ $item->comments }}">{{ $item->comments }}</a></h3>
-    
-                            @for($i = 0; $i < 5; $i++)
-                                @if($i < $item->star_rating)
+
+                            @for ($i = 0; $i < 5; $i++)
+                                @if ($i < $item->star_rating)
                                     <label class="star--gold" title="{{ $i }} stars">
                                         <i class="fas fa-star"></i>
                                     </label>
@@ -501,7 +508,7 @@
                                         <i class="fas fa-star"></i>
                                     </label>
                                 @endif
-                            @endfor 
+                            @endfor
                         </div>
                     </div>
                 </div>

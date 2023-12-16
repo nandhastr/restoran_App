@@ -47,13 +47,13 @@ class ChartController extends Controller
         $order->user_id = $request['user_id'];
         $order->no_order = $newNoOrder;
         $order->bayar = 0;
-        $order->total_bayar = 0;
+        $order->total_bayar = Cart::subtotal();
         $order->status = 'Proses';
         $order->save();
 
         $order_id = $order->id_orders;
 
-       $dataOrderDetail = [];
+        $dataOrderDetail = [];
         foreach ($dataOrder as $data) {
             $dataOrderDetail[] = [
                 'produk_id' => $data['produk_id'],
@@ -63,11 +63,10 @@ class ChartController extends Controller
                 'total_harga' => $data['total_harga']
             ];
         }
+
         OrderDetail::insert($dataOrderDetail);
         Cart::destroy();
 
         return redirect()->route('client.index')->with('success', 'Order successfully created.');
-
     }
-
 }

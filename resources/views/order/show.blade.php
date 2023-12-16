@@ -27,8 +27,8 @@
 
                                 <td>{{ $item->name }}</td>
                                 <td>{{ $item->qty }}</td>
-                                <td> {{ $item->price }} </td>
-                                <td> {{ $item->total }}</td>
+                                <td>Rp.{{ number_format($item->price, 0, ',', '.') }}</td>
+                                <td>Rp.{{ number_format($item->total, 0, ',', '.') }}</td>
                                 <td>
                                     <a href="{{ route('cart.remove', $item->rowId) }}" class="btn btn-danger btn-sm">
                                         Remove
@@ -46,7 +46,7 @@
                         @endforeach
                     </tbody>
                 </table>
-                <p>Total: {{ Cart::total() }}</p>
+                <p>Total: Rp.{{ number_format(Cart::subtotal(), 0, ',', '.')  }}</p>
                 <button type="submit" class="btn btn-primary">Proceed to Checkout</button>
             </form>
         @else
