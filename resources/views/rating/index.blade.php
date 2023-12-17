@@ -109,9 +109,12 @@
             
                                         {{-- <a href="{{ route('rating.edit', ['rating' => $rating->user_name]) }}"
                                             class="btn btn-primary btn-sm">edit </a> --}}
-                                        <a onclick="confirmDelete(this)"
+                                        {{-- <a onclick="confirmDelete(this)"
                                             data-url="{{ route('deleteRating', ['rating' => $rating->id]) }}"
-                                            class="btn btn-danger btn-sm" role="button">Hapus</a>
+                                            class="btn btn-danger btn-sm" role="button">Hapus</a> --}}
+                                            <a class="btn btn-outline-danger btn-sm mb-1 "
+                                            onclick="return confirm('Apakah anda yakin ?')"
+                                            href="{{ route('deleteRating', ['rating' => $rating->id]) }}">Hapus</a>
 
                                     </td>
                                 </tr>

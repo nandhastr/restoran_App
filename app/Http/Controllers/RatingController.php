@@ -94,11 +94,9 @@ class RatingController extends Controller
      * @param  \App\Models\Rating  $rating
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(reviewRating $rating)
     {
-        $rating = ReviewRating::where('user_name', $id)->firstOrFail();
         $rating->delete();
-    
-        return redirect()->back()->with('success', 'Rating berhasil dihapus');
+        return redirect()->route('rating.index')->with('success', 'Order berhasil dihapus');
     }
 }
