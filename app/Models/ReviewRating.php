@@ -9,11 +9,16 @@ class ReviewRating extends Model
 {
     use HasFactory;
 
+    protected $table = 'review_ratings'; 
+
+    protected $primaryKey = 'id'; 
+
     protected $fillable = [
         'name',
         'comments',
         'star_rating',
         'status',
+        'created_at',
     ];
 
     protected $casts = [
