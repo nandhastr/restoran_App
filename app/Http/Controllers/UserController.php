@@ -106,6 +106,7 @@ class UserController extends Controller
     }
     public function reviewstore(Request $request){
         $review = new ReviewRating();
+        $review->name = $request->name;
         $review->comments= $request->comment;
         $review->star_rating = $request->rating;
         $review->user_id = Auth::user()->id;
