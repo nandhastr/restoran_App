@@ -457,6 +457,11 @@
                         style="box-shadow: 0 0 10px 0 #ddd;" method="POST" autocomplete="off">
                         @csrf
                         <p class="font-weight-bold ">Review</p>
+                        <div class="form-group row mt-4">
+                            <div class="col">
+                                <input type="text" class="form-control" name="name" placeholder="Masukan Nama Anda" maxlength="200">
+                            </div>
+                        </div>
                         <div class="form-group row">
                             <div class="col">
                                 <div class="rate">
@@ -513,6 +518,11 @@
                                     <form class="py-2 px-4" style="box-shadow: 0 0 10px 0 #ddd;" 
                                         method="POST" autocomplete="off">
                                             <p class="font-weight-bold ">REVUEW CUSTOMER</p>
+                                                <div class="">    
+                                                    <p class="text-left no-click text-uppercase fw-bold fs-4" 
+                                                        name="comment" maxlength="200" readonly>{{ $item->name }}
+                                                    </p>
+                                                </div>
                                                 <div class="form-group row">
                                                     <div class="col">
                                                         @for ($i = 0; $i < 5; $i++)
@@ -531,9 +541,9 @@
                                                 </div>
                                         {{-- comment --}}                                
                                         <div class="">    
-                                        <textarea class="form-control text-left no-click" 
-                                            name="comment" rows="3" maxlength="200" readonly>{{ $item->comments }}
-                                        </textarea>
+                                            <p class="text-left no-click text-capitalize fw-bold fs-6" 
+                                                name="comment"  maxlength="200" readonly>{{ $item->comments }}
+                                            </p>
                                         </div>
                                     </form>
                                 </div>
