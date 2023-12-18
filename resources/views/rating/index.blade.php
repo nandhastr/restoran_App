@@ -64,9 +64,9 @@
                         <a class="btn btn-info mb-3" href="{{ route('manager.index') }}" role="button">
                             <i class="fa fa-arrow-left"></i>
                         </a>
-                        <a class="btn btn-info mb-3" href="" role="button">
+                        {{-- <a class="btn btn-info mb-3" href="" role="button">
                             + RATING
-                        </a>
+                        </a> --}}
 
                     </div>
 
@@ -75,11 +75,12 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>NAME</th>
+                                    <th>NAMA</th>
                                     <th>RATING</th>
                                     <th>REVIEW</th>
-                                    <th>TANGGAL</th>
-                                    <th>AKTIVITAS</th>
+                                    <th>WAKTU REVIEW</th>
+                                    <th>STATUS</th>
+                                    <th>AKSI</th>
                                 </tr>
                             </thead>
 
@@ -90,19 +91,30 @@
                                 @foreach ($ratings as $rating)
                                 <tr>
                                     <td>{{ $no++ }}</td>
-                                    <td>{{ $rating->user_name }}</td>
-                                    <td>{{ $rating->user_rating }}</td>
-                                    <td>{{ $rating->user_review }}</td>
-                                    <td>{{ $rating->datetime }}</td>
+                                    <td>{{ $rating->name }}</td>
+                                    <td>{{ $rating->star_rating }}</td>
+                                    <td>{{ $rating->comments }}</td>
+                                    <td>{{ $rating->created_at }}</td>
+                                    <td>{{ $rating->status }}</td>
                                     <td>
-                                        <a href="" type="button" class="btn btn-success btn-sm" data-toggle="modal"
-                                            data-target="#modal-secondary{{ $rating->id_ratings }}">View
-                                        </a>
-                                        <a href="{{ route('rating.edit', ['rating' => $rating->user_name]) }}"
-                                            class="btn btn-primary btn-sm">edit </a>
-                                        <a onclick="confirmDelete(this)"
-                                            data-url="{{ route('deleteRating', ['rating' => $rating->user_name]) }}"
-                                            class="btn btn-danger btn-sm" role="button">Hapus</a>
+                                        {{-- <a href="" type="button" class="btn btn-success btn-sm" data-toggle="modal"
+                                        data-target="#modal-secondary{{ $value->id }}">View
+                                    </a> --}}
+                                    <button type="button" class="btn btn-success btn-sm view-modal"
+                                    data-toggle="modal"
+                                    data-target="#modal-secondary{{ $rating->id }}"
+                                    data-id="{{ $rating->id }}">
+                                    View
+                                    </button>
+            
+                                        {{-- <a href="{{ route('rating.edit', ['rating' => $rating->user_name]) }}"
+                                            class="btn btn-primary btn-sm">edit </a> --}}
+                                        {{-- <a onclick="confirmDelete(this)"
+                                            data-url="{{ route('deleteRating', ['rating' => $rating->id]) }}"
+                                            class="btn btn-danger btn-sm" role="button">Hapus</a> --}}
+                                            <a class="btn btn-outline-danger btn-sm mb-1 "
+                                            onclick="return confirm('Apakah anda yakin ?')"
+                                            href="{{ route('deleteRating', ['rating' => $rating->id]) }}">Hapus</a>
 
                                     </td>
                                 </tr>
@@ -110,7 +122,10 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="modal fade" id="modal-secondary{{ $rating->id_ratings }}">
+                    {{-- MODAL --}}
+                    @foreach ($ratings as $rating)
+
+                    <div class="modal fade" id="modal-secondary{{ $rating->id }}">
                         <div class="modal-dialog">
                             <div class="modal-content bg-secondary">
                                 <div class="modal-header">
@@ -127,7 +142,7 @@
                                                 <img class="profile-user-img img-fluid img-circle"
                                                     src="../../dist/img/user4-128x128.jpg" alt="User profile picture">
                                             </div>
-                                            <h3 class="profile-username text-center text-dark">{{ $rating->user_name }}
+                                            <h3 class="profile-username text-center text-dark">{{ $rating->name }}
                                             </h3>
                                         </div>
                                         <!-- /.card-body -->
@@ -142,11 +157,11 @@
                                         <!-- /.card-header -->
                                         <div class="card-body">
                                             <small class="text-dark">Rating Star</small> <br>
-                                            @for ($i = 1; $i <= $rating->user_rating; $i++)
+                                            @for ($i = 1; $i <= $rating->star_rating; $i++)
                                                 <i class="fas fa-star text-warning"></i>
                                                 @endfor
 
-                                                @for ($i = $rating->user_rating + 1; $i <= 5; $i++) <i
+                                                @for ($i = $rating->star_rating + 1; $i <= 5; $i++) <i
                                                     class="fas fa-star text-secondary"></i>
                                                     @endfor <br>
                                                     <small class="text-dark">{{ $rating->created_at }}</small>
@@ -156,7 +171,7 @@
                                                             class="far fa-file-alt mr-1 text-dark"></i>
                                                         Notes :</strong>
                                                     <br>
-                                                    <p class="text-dark">{{ $rating->user_review }}.
+                                                    <p class="text-dark">{{ $rating->comments }}.
                                                     </p>
                                         </div>
                                         <!-- /.card-body -->
@@ -172,6 +187,8 @@
                         </div>
                         <!-- /.modal -->
                     </div>
+                    @endforeach
+
                 </div>
             </div>
     </section>
