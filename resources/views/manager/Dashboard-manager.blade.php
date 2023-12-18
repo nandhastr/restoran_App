@@ -239,8 +239,8 @@
                             <div class="col-sm-4 col-6">
                                 <div class="description-block">
                                     <span class="description-percentage text-danger"><i class="fas fa-caret-down"></i>
-                                        18%</span>
-                                    <h5 class="description-header">1200</h5>
+                                        80%</span>
+                                    <h5 class="description-header">100</h5>
                                     <span class="description-text">PENCAPAIAN TARGET</span>
                                 </div>
                                 <!-- /.description-block -->
