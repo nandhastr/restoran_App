@@ -510,12 +510,7 @@
                         <div class="mt-3 text-right">
                             <button class="btn btn-sm py-2 px-3 btn-dark">Submit
                             </button>
-
                         </div>
-                    </div>
-                    <div class="mt-3 text-right">
-                        <button class="btn btn-sm py-2 px-3 btn-info">Submit
-                        </button>
                     </div>
                 </form>
             </div>
