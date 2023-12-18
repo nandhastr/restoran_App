@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ChartController;
 use Illuminate\Routing\RouteGroup;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -33,14 +34,24 @@ Route::get('/client', [UserController::class, 'index'])->name('client.index');
 
 // Client rating
 Route::get('/rating', [RatingController::class, 'index'])->name('rating.index');
+Route::get('/rating/{rating}/edit', [RatingController::class, 'edit'])->name('rating.edit');
+Route::get('/rating/{rating}/update', [RatingController::class, 'update'])->name('rating.update');
 Route::get('/rating/{rating}/delete', [RatingController::class, 'destroy'])->name('deleteRating');
+//rating v2
+Route::post('review-store', [UserController::class, 'reviewstore'])->name('review.store');
+
 
 // Route Kasir
 Route::get('/order', [OrderController::class, 'index'])->name('order.index');
-Route::post('/order', [OrderController::class, 'store'])->name('order.store');
+Route::post('/order/store', [OrderController::class, 'store'])->name('order.store');
 Route::get('/order/{order}/edit', [OrderController::class, 'edit'])->name('order.edit');
 Route::post('/order/{order}/update', [OrderController::class, 'update'])->name('order.update');
 Route::get('/order/{order}/delete', [OrderController::class, 'destroy'])->name('order.delete');
+
+//Route Chart
+Route::get('/cart', [ChartController::class, 'listChart'])->name('listChart');
+Route::get('/cart/remove/{rowId}', [ChartController::class, 'removeFromCart'])->name('cart.remove');
+Route::POST('/cart/store', [ChartController::class, 'store'])->name('cart.store');
 
 
 //Route Manager
