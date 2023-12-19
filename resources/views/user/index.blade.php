@@ -256,6 +256,7 @@
             font-size: 30px;
             color: #ccc;
         }
+
         .no-click {
             pointer-events: none;
         }
@@ -457,6 +458,7 @@
     </section><!-- End Portfolio Section -->
     <!--rating-->
     @if (!empty($value->star_rating))
+
         <div class="container">
             <div class="row">
                 <div class="col mt-4">
@@ -527,34 +529,11 @@
                     </form>
                 </div>
             </div>
-            </form>
         </div>
     @endif
-    {{-- rating view --}}
-    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-        <ol class="carousel-indicators">
-            @foreach ($value as $index => $_)
-            <li data-target="#carouselExampleIndicators" data-slide-to="{{ $index }}" @if ($index===0) class="active"
-                @endif></li>
-            @endforeach
-        </ol>
-        <div class="carousel-inner">
-            @foreach ($value as $index => $item)
-            <div class="carousel-item @if ($index === 0) active @endif">
-                <div class="container brdr">
-                    <div class="well">
-                        <h3><a href="/reviews/{{ $item->comments }}">{{ $item->comments }}</a></h3>
 
-                        @for ($i = 0; $i < 5; $i++) @if ($i < $item->star_rating)
-                            <label class="star--gold" title="{{ $i }} stars">
-                                <i class="fas fa-star"></i>
-                            </label>
-                            @else
-                            <label title="{{ $i }} stars">
-                                <i class="fas fa-star"></i>
-                            </label>
-                            @endif
-                            @endfor
+
+    {{-- rating view --}}
     <div class="row mt-5">
         <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
             <ol class="carousel-indicators">
@@ -605,20 +584,19 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                @endforeach
             </div>
+            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon bg-dark" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <i class=""></i>
+            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                <span class="carousel-control-next-icon bg-dark" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
         </div>
-        @endforeach
-    </div>
-    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-        <span class="carousel-control-prev-icon bg-dark" aria-hidden="true"></span>
-        <span class="sr-only">Previous</span>
-    </a>
-    <i class=""></i>
-    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-        <span class="carousel-control-next-icon bg-dark" aria-hidden="true"></span>
-        <span class="sr-only">Next</span>
-    </a>
+
     </div>
     <!--end rating -->
 
