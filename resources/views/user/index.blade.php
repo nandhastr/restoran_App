@@ -256,14 +256,14 @@
             font-size: 30px;
             color: #ccc;
         }
-
         .no-click {
             pointer-events: none;
         }
 
         .bg-rating {
-            background-color:#e9edf0;
-            border-radius: 20px; /* Atur nilai border-radius sesuai preferensi Anda */
+            background-color: #e9edf0;
+            border-radius: 20px;
+            /* Atur nilai border-radius sesuai preferensi Anda */
             overflow: hidden;
         }
     </style>
@@ -274,46 +274,42 @@
         <div class="container">
             <nav class="navbar">
 
-
-
-
-                {{-- @if (!Auth::check())
-                <a class="nav-link text-decoration-none text-white" href="/login">Login</a>
-                @else --}}
-
-
                 <div class="navbar-collapse pt-4">
                     <div class="navbar-extra">
                         @guest
-                        @if (Route::has('login'))
-                        <a class="btn-theme btn" style="background-color: #395B64; border-radius: 15px"
-                            href="{{ route('login') }}">{{ __('Login') }}</a>&nbsp;
-                        @endif
+                            @if (Route::has('login'))
+                                <a class="btn-theme btn" style="background-color: #395B64; border-radius: 15px"
+                                    href="{{ route('login') }}">{{ __('Login') }}</a>&nbsp;
+                            @endif
                         @else
-                        <a class="btn-theme btn" style="background-color: #395B64; border-radius: 15px"
-                            href="{{ route('logout') }}" onclick="event.preventDefault();
+                            <a class="btn-theme btn" style="background-color: #395B64; border-radius: 15px"
+                                href="{{ route('logout') }}"
+                                onclick="event.preventDefault();
                             document.getElementById('logout-form').submit();">Logout</a>&nbsp;
 
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                            @csrf
-                        </form>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                @csrf
+                            </form>
 
-                        @if (Auth::user()->role == 'client')
-                        <a type="button" class="btn-theme btn position-relative mr-4"
-                            style="background-color: #395B64; border-radius: 15px; color: white; height: 55px; padding-top: 10px">
-                            <h2><i class="bx bx-cart" style="font-size: 24px;"></i></h2>
-                            <span
-                                class="position-absolute top-0 start-100 translate-middle badge rounded-pill badge-danger">
-                                0
-                            </span>
-                        </a>&nbsp;
-                        @elseif(Auth::user()->role == 'kasir')
-                        <a class="btn-theme btn mr-3 text-light" style="background-color: #395B64; border-radius: 15px"
-                            href="{{ route('order.index') }}">Order</a>
-                        @else
-                        <a class="btn-theme btn mr-3 text-light" style="background-color: #395B64; border-radius: 15px"
-                            href="{{ route('manager.index') }}">Dashboard</a>
-                        @endif
+                            @if (Auth::user()->role == 'client')
+                                <a type="button" href="{{ route('listChart') }}"
+                                    class="btn-theme btn position-relative mr-4"
+                                    style="background-color: #395B64; border-radius: 15px; color: white; height: 55px; padding-top: 10px">
+                                    <h2><i class="bx bx-cart" style="font-size: 24px;"></i></h2>
+                                    <span
+                                        class="position-absolute top-0 start-100 translate-middle badge rounded-pill badge-danger">
+                                        {{ Cart::count() }}
+                                    </span>
+                                </a>&nbsp;
+                            @elseif(Auth::user()->role == 'kasir')
+                                <a class="btn-theme btn mr-3 text-light"
+                                    style="background-color: #395B64; border-radius: 15px"
+                                    href="{{ route('order.index') }}">Order</a>
+                            @else
+                                <a class="btn-theme btn mr-3 text-light"
+                                    style="background-color: #395B64; border-radius: 15px"
+                                    href="{{ route('manager.index') }}">Dashboard</a>
+                            @endif
                         @endguest
 
 
@@ -347,103 +343,120 @@
 
             <div class="row portfolio-container" style="padding-left: 10%">
                 @foreach ($produk as $d)
-                <div class="col-lg-2 col-md-6 portfolio-item filter-{{ $d->kategori_produks }} "
-                    style="background-color: #222831; padding: 0px; border-radius: 20px; margin-left: 10px;">
-                    <img class="card-img-top" src="{{ asset('uploads/' . $d->gambar_produks) }}" alt="Card image"
-                        style="border-radius: 20px 20px 0 0; width: 100%; height: 200px; object-fit: cover;">
-                    <div class="card-body" style="color: white; padding: 8px; height: 125px; overflow: hidden;">
-                        <h4 class="card-title"
-                            style="font-size: 20px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{
-                            $d->nama_produks }}</h4>
-                        <p class="card-text" style="font-size: 14px;">Rp.{{ $d->harga_produks }}</p>
-                        <a class="btn btn-warning btn-sm" data-toggle="modal"
-                            data-target="#exampleModals{{ $d->id_produks }}" title="App 1">Lihat Produk</a>
-                        <a class="btn btn-success btn-sm" data-toggle="modal"
-                            data-target="#exampleModal{{ $d->id_produks }}" title="App 1">Order <i
-                                class="bx bx-cart"></i></a>
-
-                    </div>
-                </div>
-
-                <div class="modal fade" id="exampleModals{{ $d->id_produks }}" tabindex="-1" role="dialog"
-                    aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content card" style="max-width: 300px; background-color:#222831;">
+                    <form action="{{ route('order.store') }}" method="post">
+                        @csrf
+                        <div class="col-lg-2 col-md-6 portfolio-item filter-{{ $d->kategori_produks }} "
+                            style="background-color: #222831; padding: 0px; border-radius: 20px; margin-left: 10px;">
                             <img class="card-img-top" src="{{ asset('uploads/' . $d->gambar_produks) }}"
                                 alt="Card image"
-                                style="width: 100%; border-radius: 10px 10px 0 0; max-height: 360px; object-fit: cover;">
-                            <div class="modal-body" align="center" style="padding: 15px;">
-                                <h4 class="card-title text-white" style="font-size: 14px;">{{ $d->nama_produks }}</h4>
-                                <p class="card-text text-white" style="font-size: 12px;"><b>Harga: </b>Rp.{{
-                                    $d->harga_produks }}</p>
-                                <p class="card-text text-white" style="font-size: 12px;"><b>Deskripsi: </b> </p>
-                                <p class="card-text text-white" style="font-size: 12px;">{{ $d->deskripsi_produks }}</p>
-                                <p class="card-text text-white" style="font-size: 12px;"><b>Stok: </b> {{
-                                    $d->stok_produks }}</p>
-                                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">OK</button>
+                                style="border-radius: 20px 20px 0 0; width: 100%; height: 200px; object-fit: cover;">
+                            <div class="card-body"
+                                style="color: white; padding: 8px; height: 125px; overflow: hidden;">
+                                <h4 class="card-title"
+                                    style="font-size: 20px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                    {{ $d->nama_produks }}</h4>
+                                    <input type="hidden" name="product_name" value=" {{ $d->nama_produks }}">
+                                <p class="card-text" style="font-size: 14px;">Rp.{{ $d->harga_produks }}</p>
+                                <a class="btn btn-warning btn-sm" data-toggle="modal"
+                                    data-target="#exampleModals{{ $d->id_produks }}" title="App 1">Lihat Produk</a>
+                                <a class="btn btn-success btn-sm" data-toggle="modal"
+                                    data-target="#exampleModal{{ $d->id_produks }}" title="App 1">Order <i
+                                        class="bx bx-cart"></i></a>
+
                             </div>
                         </div>
-                    </div>
-                </div>
 
-
-
-                <div class="modal fade" id="exampleModal{{ $d->id_produks }}" tabindex="-1" role="dialog"
-                    aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-lg" role="document">
-                        <div class="modal-content" style="background-color:#222831">
-                            <div class="modal-header">
-                                <h5 class="modal-title text-white" id="exampleModalLabel">Pembelian Barang</h5>
-                                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-
-                            <div class="modal-body">
-                                <div class="row">
-                                    <label class="col-sm-3 text-white">Kuantitas </label>
-                                    <div class="col-sm-6">
-                                        <div class="input-group ">
-                                            <span class="input-group-btn">
-                                                <button type="button"
-                                                    class="quantity-left-minus btn  btn-number text-white"
-                                                    data-type="minus" data-field="">
-                                                    <i class="bx bx-minus text-white"></i>
-                                                </button>
-                                            </span>
-                                            <input type="number" id="quantity" name="jumlah"
-                                                class="form-control input-number" value="1" min="1" max="100">
-                                            <input type="hidden" id="id_produk" name="id_produk"
-                                                value="{{ $d->id_produks }}">
-                                            <span class="input-group-btn">
-                                                <button type="button"
-                                                    class="quantity-right-plus btn  btn-number text-white"
-                                                    data-type="plus" data-field="">
-                                                    <i class="bx bx-plus"></i>
-                                                </button>
-                                            </span>
-                                        </div>
+                        <div class="modal fade" id="exampleModals{{ $d->id_produks }}" tabindex="-1"
+                            role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content card" style="max-width: 300px; background-color:#222831;">
+                                    <img class="card-img-top" src="{{ asset('uploads/' . $d->gambar_produks) }}"
+                                        alt="Card image"
+                                        style="width: 100%; border-radius: 10px 10px 0 0; max-height: 360px; object-fit: cover;">
+                                    <div class="modal-body" align="center" style="padding: 15px;">
+                                        <h4 class="card-title text-white" style="font-size: 14px;">
+                                            {{ $d->nama_produks }}
+                                        </h4>
+                                        <p class="card-text text-white" style="font-size: 12px;"><b>Harga:
+                                            </b>Rp.{{ $d->harga_produks }}</p>
+                                        <p class="card-text text-white" style="font-size: 12px;"><b>Deskripsi: </b>
+                                        </p>
+                                        <p class="card-text text-white" style="font-size: 12px;">
+                                            {{ $d->deskripsi_produks }}</p>
+                                        <p class="card-text text-white" style="font-size: 12px;"><b>Stok: </b>
+                                            {{ $d->stok_produks }}</p>
+                                        <button type="button" class="btn btn-secondary btn-sm"
+                                            data-dismiss="modal">OK</button>
                                     </div>
-                                    <label class="col-sm-3 text-white">Tersisa: {{ $d->stok_produks }} Buah</label>
                                 </div>
                             </div>
+                        </div>
 
-                            <div class="modal-footer">
-                                <input type="hidden" name="user_id" id="user_id" value="{{ Auth::user()->id }}">
-                                <input type="hidden" name="harga" id="harga" value="{{ $d->harga_produks }}">
-                                <button type="submit" class="btn btn-secondary">Beli Sekarang</button>
+                        <div class="modal fade" id="exampleModal{{ $d->id_produks }}" tabindex="-1" role="dialog"
+                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-lg" role="document">
+                                <div class="modal-content" style="background-color:#222831">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title text-white" id="exampleModalLabel">Pembelian Barang
+                                        </h5>
+                                        <button type="button" class="close text-white" data-dismiss="modal"
+                                            aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <label class="col-sm-3 text-white">Kuantitas </label>
+                                            <div class="col-sm-6">
+                                                <div class="input-group ">
+                                                    <span class="input-group-btn">
+                                                        <button type="button"
+                                                            class="quantity-left-minus btn  btn-number text-white"
+                                                            data-type="minus" data-field="">
+                                                            <i class="bx bx-minus text-white"></i>
+                                                        </button>
+                                                    </span>
+                                                    <input type="number" id="quantity" name="jumlah"
+                                                        class="form-control input-number" value="1"
+                                                        min="1" max="100">
+                                                    <input type="hidden" id="id_produk" name="id_produk"
+                                                        value="{{ $d->id_produks }}">
+                                                    <span class="input-group-btn">
+                                                        <button type="button"
+                                                            class="quantity-right-plus btn  btn-number text-white"
+                                                            data-type="plus" data-field="">
+                                                            <i class="bx bx-plus"></i>
+                                                        </button>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <label class="col-sm-3 text-white">Tersisa: {{ $d->stok_produks }}
+                                                Buah</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <input type="hidden" name="user_id" id="user_id"
+                                            value="{{ Auth::user()->id }}">
+                                        <input type="hidden" name="harga" id="harga"
+                                            value="{{ $d->harga_produks }}">
+                                        {{-- <button type="submit" class="btn btn-secondary">Beli Sekarang</button> --}}
+                                        <button type="submit" class="btn btn-secondary" name="action"
+                                            value="buy_now">Beli Sekarang</button>
+                                        <button type="submit" class="btn btn-primary" name="action"
+                                            value="add_to_cart">Masukkan Keranjang</button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-                </form>
+                    </form>
                 @endforeach
 
             </div>
     </section><!-- End Portfolio Section -->
     <!--rating-->
     @if (!empty($value->star_rating))
-
         <div class="container">
             <div class="row">
                 <div class="col mt-4">
@@ -454,72 +467,94 @@
                                 @for ($i = 1; $i <= $value->star_rating; $i++)
                                     <label class="star-rating-complete" title="text">{{ $i }}
                                         stars</label>
-
                                 @endfor
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="form-group row mt-4">
-                    <div class="col">
-                        <p>{{ $value->comments }}</p>
+                    <div class="form-group row mt-4">
+                        <div class="col">
+                            <p>{{ $value->comments }}</p>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-
-    @else 
-    {{-- START --}}
-        <div class="container">
-            <div class="row">
-                <div class="col mt-4">
-                    <form class="py-2 px-4" action="{{ route('review.store') }}"
-                        style="box-shadow: 0 0 10px 0 #ddd;" method="POST" autocomplete="off">
-                        @csrf
-                        <p class="font-weight-bold ">Review</p>
-                        <div class="form-group row mt-4">
-                            <div class="col">
-                                <input type="text" class="form-control" name="name" placeholder="Masukan Nama Anda" maxlength="200">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <div class="col">
-                                <div class="rate">
-                                    <input type="radio" id="star5" class="rate" name="rating"
-                                        value="5" />
-                                    <label for="star5" title="text">5 stars</label>
-                                    <input type="radio" checked id="star4" class="rate" name="rating"
-                                        value="4" />
-                                    <label for="star4" title="text">4 stars</label>
-                                    <input type="radio" id="star3" class="rate" name="rating"
-                                        value="3" />
-                                    <label for="star3" title="text">3 stars</label>
-                                    <input type="radio" id="star2" class="rate" name="rating"
-                                        value="2">
-                                    <label for="star2" title="text">2 stars</label>
-                                    <input type="radio" id="star1" class="rate" name="rating"
-                                        value="1" />
-                                    <label for="star1" title="text">1 star</label>
+        @else
+            {{-- START --}}
+            <div class="container">
+                <div class="row">
+                    <div class="col mt-4">
+                        <form class="py-2 px-4" action="{{ route('review.store') }}"
+                            style="box-shadow: 0 0 10px 0 #ddd;" method="POST" autocomplete="off">
+                            @csrf
+                            <p class="font-weight-bold ">Review</p>
+                            <div class="form-group row mt-4">
+                                <div class="col">
+                                    <input type="text" class="form-control" name="name"
+                                        placeholder="Masukan Nama Anda" maxlength="200">
                                 </div>
                             </div>
-                        </div>
-                        <div class="form-group row mt-4">
-                            <div class="col">
-                                <textarea class="form-control" name="comment" rows="6 " placeholder="Comment" maxlength="200"></textarea>
+                            <div class="form-group row">
+                                <div class="col">
+                                    <div class="rate">
+                                        <input type="radio" id="star5" class="rate" name="rating"
+                                            value="5" />
+                                        <label for="star5" title="text">5 stars</label>
+                                        <input type="radio" checked id="star4" class="rate" name="rating"
+                                            value="4" />
+                                        <label for="star4" title="text">4 stars</label>
+                                        <input type="radio" id="star3" class="rate" name="rating"
+                                            value="3" />
+                                        <label for="star3" title="text">3 stars</label>
+                                        <input type="radio" id="star2" class="rate" name="rating"
+                                            value="2">
+                                        <label for="star2" title="text">2 stars</label>
+                                        <input type="radio" id="star1" class="rate" name="rating"
+                                            value="1" />
+                                        <label for="star1" title="text">1 star</label>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="mt-3 text-right">
-                            <button class="btn btn-sm py-2 px-3 btn-dark">Submit
-                            </button>
-                        </div>
+                            <div class="form-group row mt-4">
+                                <div class="col">
+                                    <textarea class="form-control" name="comment" rows="6 " placeholder="Comment" maxlength="200"></textarea>
+                                </div>
+                            </div>
+                            <div class="mt-3 text-right">
+                                <button class="btn btn-sm py-2 px-3 btn-dark">Submit
+                                </button>
+                            </div>
                     </div>
-                </form>
+                    </form>
+                </div>
             </div>
+            </form>
         </div>
-    </div>
     @endif
-
-
     {{-- rating view --}}
+    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+            @foreach ($value as $index => $_)
+            <li data-target="#carouselExampleIndicators" data-slide-to="{{ $index }}" @if ($index===0) class="active"
+                @endif></li>
+            @endforeach
+        </ol>
+        <div class="carousel-inner">
+            @foreach ($value as $index => $item)
+            <div class="carousel-item @if ($index === 0) active @endif">
+                <div class="container brdr">
+                    <div class="well">
+                        <h3><a href="/reviews/{{ $item->comments }}">{{ $item->comments }}</a></h3>
+
+                        @for ($i = 0; $i < 5; $i++) @if ($i < $item->star_rating)
+                            <label class="star--gold" title="{{ $i }} stars">
+                                <i class="fas fa-star"></i>
+                            </label>
+                            @else
+                            <label title="{{ $i }} stars">
+                                <i class="fas fa-star"></i>
+                            </label>
+                            @endif
+                            @endfor
     <div class="row mt-5">
         <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
             <ol class="carousel-indicators">
@@ -535,34 +570,34 @@
                         <div class="container bg-rating">
                             <div class="row">
                                 <div class="col mt-4">
-                                    <form class="py-2 px-4" style="box-shadow: 0 0 10px 0 #ddd;" 
-                                        method="POST" autocomplete="off">
-                                            <p class="font-weight-bold ">REVUEW CUSTOMER</p>
-                                                <div class="">    
-                                                    <p class="text-left no-click text-uppercase fw-bold fs-4" 
-                                                        name="comment" maxlength="200" readonly>{{ $item->name }}
-                                                    </p>
-                                                </div>
-                                                <div class="form-group row">
-                                                    <div class="col">
-                                                        @for ($i = 0; $i < 5; $i++)
-                                                            @if ($i < $item->star_rating)
-                                                                <label class="star--gold" title="{{ $i }} stars">
-                                                                    <i class="fas fa-star"></i>
-                                                                </label>
-                                                            @else
-                                                                <label title="{{ $i }} stars">
-                                                                    <i class="fas fa-star"></i>
-                                                                </label>
-                                                            @endif
-                                                        @endfor
+                                    <form class="py-2 px-4" style="box-shadow: 0 0 10px 0 #ddd;" method="POST"
+                                        autocomplete="off">
+                                        <p class="font-weight-bold ">REVUEW CUSTOMER</p>
+                                        <div class="">
+                                            <p class="text-left no-click text-uppercase fw-bold fs-4" name="comment"
+                                                maxlength="200" readonly>{{ $item->name }}
+                                            </p>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col">
+                                                @for ($i = 0; $i < 5; $i++)
+                                                    @if ($i < $item->star_rating)
+                                                        <label class="star--gold" title="{{ $i }} stars">
+                                                            <i class="fas fa-star"></i>
+                                                        </label>
+                                                    @else
+                                                        <label title="{{ $i }} stars">
+                                                            <i class="fas fa-star"></i>
+                                                        </label>
+                                                    @endif
+                                                @endfor
 
-                                                    </div>
-                                                </div>
-                                        {{-- comment --}}                                
-                                        <div class="">    
-                                            <p class="text-left no-click text-capitalize fw-bold fs-6" 
-                                                name="comment"  maxlength="200" readonly>{{ $item->comments }}
+                                            </div>
+                                        </div>
+                                        {{-- comment --}}
+                                        <div class="">
+                                            <p class="text-left no-click text-capitalize fw-bold fs-6" name="comment"
+                                                maxlength="200" readonly>{{ $item->comments }}
                                             </p>
                                         </div>
                                     </form>
@@ -570,19 +605,20 @@
                             </div>
                         </div>
                     </div>
-                @endforeach
+                </div>
             </div>
-            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-                <span class="carousel-control-prev-icon bg-dark" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-            </a>
-            <i class=""></i>
-            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-                <span class="carousel-control-next-icon bg-dark" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
-            </a>
         </div>
-
+        @endforeach
+    </div>
+    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon bg-dark" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+    <i class=""></i>
+    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+        <span class="carousel-control-next-icon bg-dark" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
     </div>
     <!--end rating -->
 
@@ -634,45 +670,44 @@
     <!-- Template Main JS File -->
     <script src="assets/js/main.js"></script>
     <script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAJ4Qy67ZAILavdLyYV2ZwlShd0VAqzRXA&callback=initMap">
-    </script>
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAJ4Qy67ZAILavdLyYV2ZwlShd0VAqzRXA&callback=initMap"></script>
     <script async defer src="https://ia.media-imdb.com/images/G/01/imdb/plugins/rating/js/rating.js"></script>
 
     <script>
         $(document).ready(function() {
 
-        var quantitiy = 0;
-        $('.quantity-right-plus').click(function(e) {
+            var quantitiy = 0;
+            $('.quantity-right-plus').click(function(e) {
 
-            // Stop acting like a button
-            e.preventDefault();
-            // Get the field name
-            var quantity = parseInt($('#quantity').val());
+                // Stop acting like a button
+                e.preventDefault();
+                // Get the field name
+                var quantity = parseInt($('#quantity').val());
 
-            // If is not undefined
+                // If is not undefined
 
-            $('#quantity').val(quantity + 1);
+                $('#quantity').val(quantity + 1);
 
 
-            // Increment
+                // Increment
+
+            });
+
+            $('.quantity-left-minus').click(function(e) {
+                // Stop acting like a button
+                e.preventDefault();
+                // Get the field name
+                var quantity = parseInt($('#quantity').val());
+
+                // If is not undefined
+
+                // Increment
+                if (quantity > 0) {
+                    $('#quantity').val(quantity - 1);
+                }
+            });
 
         });
-
-        $('.quantity-left-minus').click(function(e) {
-            // Stop acting like a button
-            e.preventDefault();
-            // Get the field name
-            var quantity = parseInt($('#quantity').val());
-
-            // If is not undefined
-
-            // Increment
-            if (quantity > 0) {
-                $('#quantity').val(quantity - 1);
-            }
-        });
-
-    });
     </script>
 </body>
 
