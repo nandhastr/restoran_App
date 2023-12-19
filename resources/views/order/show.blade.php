@@ -28,7 +28,7 @@
                                 <td>{{ $item->name }}</td>
                                 <td>{{ $item->qty }}</td>
                                 <td>Rp.{{ number_format($item->price, 0, ',', '.') }}</td>
-                                <td>Rp.{{ number_format($item->total, 0, ',', '.') }}</td>
+                                <td>Rp.{{ number_format($item->qty * $item->price, 0, ',', '.') }}</td>
                                 <td>
                                     <a href="{{ route('cart.remove', $item->rowId) }}" class="btn btn-danger btn-sm">
                                         Remove
