@@ -47,6 +47,7 @@ class OrderController extends Controller
      */
     public function store(StoreOrderRequest $request)
     {
+        // return $request;
         $action = $request->input('action');
 
         $orderFirst = Order::orderBy('id_orders', 'desc')->first();

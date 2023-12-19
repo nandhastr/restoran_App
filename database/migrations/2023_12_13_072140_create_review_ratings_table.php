@@ -15,7 +15,7 @@ class CreateReviewRatingsTable extends Migration
     {
         Schema::create('review_ratings', function (Blueprint $table) {
             $table->increments('id');
-            $table->foreignId('user_id')->references('id')->on('users');
+            $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('name');
             $table->longText('comments')->nullable();
             $table->integer('star_rating');
