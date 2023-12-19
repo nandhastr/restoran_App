@@ -256,16 +256,6 @@
             font-size: 30px;
             color: #ccc;
         }
-
-        .no-click {
-            pointer-events: none;
-        }
-
-        .bg-rating {
-            background-color:#e9edf0;
-            border-radius: 20px; /* Atur nilai border-radius sesuai preferensi Anda */
-            overflow: hidden;
-        }
     </style>
 </head>
 
@@ -443,18 +433,16 @@
     </section><!-- End Portfolio Section -->
     <!--rating-->
     @if (!empty($value->star_rating))
-
-        <div class="container">
-            <div class="row">
-                <div class="col mt-4">
-                    <p class="font-weight-bold">Review</p>
-                    <div class="form-group row">
-                        <div class="col">
-                            <div class="rated">
-                                @for ($i = 1; $i <= $value->star_rating; $i++)
-                                    <label class="star-rating-complete" title="text">{{ $i }}
-                                        stars</label>
-
+    <div class="container">
+        <div class="row">
+            <div class="col mt-4">
+                <p class="font-weight-bold ">Review</p>
+                <div class="form-group row">
+                    <div class="col">
+                        <div class="rated">
+                            @for ($i = 1; $i <= $value->star_rating; $i++)
+                                <label class="star-rating-complete" title="text">{{ $i }}
+                                    stars</label>
                                 @endfor
                         </div>
                     </div>
@@ -466,51 +454,35 @@
                 </div>
             </div>
         </div>
-
-    @else 
-    {{-- START --}}
-        <div class="container">
-            <div class="row">
-                <div class="col mt-4">
-                    <form class="py-2 px-4" action="{{ route('review.store') }}"
-                        style="box-shadow: 0 0 10px 0 #ddd;" method="POST" autocomplete="off">
-                        @csrf
-                        <p class="font-weight-bold ">Review</p>
-                        <div class="form-group row mt-4">
-                            <div class="col">
-                                <input type="text" class="form-control" name="name" placeholder="Masukan Nama Anda" maxlength="200">
+    </div>
+    @else
+    <div class="container">
+        <div class="row">
+            <div class="col mt-4">
+                <form class="py-2 px-4" action="{{ route('review.store') }}" style="box-shadow: 0 0 10px 0 #ddd;"
+                    method="POST" autocomplete="off">
+                    @csrf
+                    <p class="font-weight-bold ">Review</p>
+                    <div class="form-group row">
+                        <div class="col">
+                            <div class="rate">
+                                <input type="radio" id="star5" class="rate" name="rating" value="5" />
+                                <label for="star5" title="text">5 stars</label>
+                                <input type="radio" checked id="star4" class="rate" name="rating" value="4" />
+                                <label for="star4" title="text">4 stars</label>
+                                <input type="radio" id="star3" class="rate" name="rating" value="3" />
+                                <label for="star3" title="text">3 stars</label>
+                                <input type="radio" id="star2" class="rate" name="rating" value="2">
+                                <label for="star2" title="text">2 stars</label>
+                                <input type="radio" id="star1" class="rate" name="rating" value="1" />
+                                <label for="star1" title="text">1 star</label>
                             </div>
                         </div>
-                        <div class="form-group row">
-                            <div class="col">
-                                <div class="rate">
-                                    <input type="radio" id="star5" class="rate" name="rating"
-                                        value="5" />
-                                    <label for="star5" title="text">5 stars</label>
-                                    <input type="radio" checked id="star4" class="rate" name="rating"
-                                        value="4" />
-                                    <label for="star4" title="text">4 stars</label>
-                                    <input type="radio" id="star3" class="rate" name="rating"
-                                        value="3" />
-                                    <label for="star3" title="text">3 stars</label>
-                                    <input type="radio" id="star2" class="rate" name="rating"
-                                        value="2">
-                                    <label for="star2" title="text">2 stars</label>
-                                    <input type="radio" id="star1" class="rate" name="rating"
-                                        value="1" />
-                                    <label for="star1" title="text">1 star</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group row mt-4">
-                            <div class="col">
-                                <textarea class="form-control" name="comment" rows="6 " placeholder="Comment" maxlength="200"></textarea>
-                            </div>
-                        </div>
-                        <div class="mt-3 text-right">
-                            <button class="btn btn-sm py-2 px-3 btn-dark">Submit
-                            </button>
-
+                    </div>
+                    <div class="form-group row mt-4">
+                        <div class="col">
+                            <textarea class="form-control" name="comment" rows="6 " placeholder="Comment"
+                                maxlength="200"></textarea>
                         </div>
                     </div>
                     <div class="mt-3 text-right">
@@ -525,69 +497,45 @@
 
 
     {{-- rating view --}}
-    <div class="row mt-5">
-        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-            <ol class="carousel-indicators">
-                @foreach ($value as $index => $_)
-                    <li data-target="#carouselExampleIndicators" data-slide-to="{{ $index }}"
-                        @if ($index === 0) class="active" @endif></li>
-                @endforeach
-            </ol>
-            <div class="carousel-inner">
-                @foreach ($value as $index => $item)
-                    <div class="carousel-item @if ($index === 0) active @endif">
-                        {{-- START --}}
-                        <div class="container bg-rating">
-                            <div class="row">
-                                <div class="col mt-4">
-                                    <form class="py-2 px-4" style="box-shadow: 0 0 10px 0 #ddd;" 
-                                        method="POST" autocomplete="off">
-                                            <p class="font-weight-bold ">REVUEW CUSTOMER</p>
-                                                <div class="">    
-                                                    <p class="text-left no-click text-uppercase fw-bold fs-4" 
-                                                        name="comment" maxlength="200" readonly>{{ $item->name }}
-                                                    </p>
-                                                </div>
-                                                <div class="form-group row">
-                                                    <div class="col">
-                                                        @for ($i = 0; $i < 5; $i++)
-                                                            @if ($i < $item->star_rating)
-                                                                <label class="star--gold" title="{{ $i }} stars">
-                                                                    <i class="fas fa-star"></i>
-                                                                </label>
-                                                            @else
-                                                                <label title="{{ $i }} stars">
-                                                                    <i class="fas fa-star"></i>
-                                                                </label>
-                                                            @endif
-                                                        @endfor
+    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+            @foreach ($value as $index => $_)
+            <li data-target="#carouselExampleIndicators" data-slide-to="{{ $index }}" @if ($index===0) class="active"
+                @endif></li>
+            @endforeach
+        </ol>
+        <div class="carousel-inner">
+            @foreach ($value as $index => $item)
+            <div class="carousel-item @if ($index === 0) active @endif">
+                <div class="container brdr">
+                    <div class="well">
+                        <h3><a href="/reviews/{{ $item->comments }}">{{ $item->comments }}</a></h3>
 
-                                                    </div>
-                                                </div>
-                                        {{-- comment --}}                                
-                                        <div class="">    
-                                            <p class="text-left no-click text-capitalize fw-bold fs-6" 
-                                                name="comment"  maxlength="200" readonly>{{ $item->comments }}
-                                            </p>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
+                        @for ($i = 0; $i < 5; $i++) @if ($i < $item->star_rating)
+                            <label class="star--gold" title="{{ $i }} stars">
+                                <i class="fas fa-star"></i>
+                            </label>
+                            @else
+                            <label title="{{ $i }} stars">
+                                <i class="fas fa-star"></i>
+                            </label>
+                            @endif
+                            @endfor
                     </div>
-                @endforeach
+                </div>
             </div>
-            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-                <span class="carousel-control-prev-icon bg-dark" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-            </a>
-            <i class=""></i>
-            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-                <span class="carousel-control-next-icon bg-dark" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
-            </a>
         </div>
-
+        @endforeach
+    </div>
+    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon bg-dark" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+    <i class=""></i>
+    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+        <span class="carousel-control-next-icon bg-dark" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
     </div>
     <!--end rating -->
 
