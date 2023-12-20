@@ -57,9 +57,18 @@
     <style>
         body {
             font-family: Arial, Helvetica, sans-serif;
+            background-image: url('uploads/23.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-position: center;
         }
 
-
+        h2, #portfolio-flters li {
+            color: black;
+            font-weight: bold;
+        }
+        
         .navbar a {
             float: right;
             font-size: 16px;
@@ -296,7 +305,7 @@
                                 <a type="button" href="{{ route('listChart') }}"
                                     class="btn-theme btn position-relative mr-4"
                                     style="background-color: #395B64; border-radius: 15px; color: white; height: 55px; padding-top: 10px">
-                                    <h2><i class="bx bx-cart" style="font-size: 24px;"></i></h2>
+                                    <h3><i class="bx bx-cart" style="font-size: 24px;"></i></h3>
                                     <span
                                         class="position-absolute top-0 start-100 translate-middle badge rounded-pill badge-danger">
                                         {{ Cart::count() }}
