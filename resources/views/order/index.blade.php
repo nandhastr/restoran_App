@@ -68,24 +68,25 @@
                             @endphp
                             @foreach ($orders as $order)
                                 <tr>
-
                                     <td>{{ $no++ }}</td>
                                     <td>{{ $order->user->name }}</td>
                                     <td>{{ $order->no_order }}</td>
                                     <td>
-                                        @if ($order->order_detail)
-                                            @forelse ($order->order_detail as $produkOrder)
-                                                Harga: {{ $produkOrder['harga'] }}<br>
-                                            @empty
-                                                Tidak ada detail pesanan
-                                            @endforelse
+                                        @if ($order->order_detail && is_array($order->order_detail))
+                                            @foreach ($order->order_detail as $produkOrder)
+                                                Produk ID: {{ $produkOrder->produk_id }}<br>
+                                                Jumlah: {{ $produkOrder->jumlah }}<br>
+                                                Harga: {{ $produkOrder->harga }}<br>
+                                                Total Harga: {{ $produkOrder->total_harga }}<br>
+                                                <!-- Add more details if needed -->
+                                                <br>
+                                            @endforeach
                                         @else
                                             Tidak ada detail pesanan
                                         @endif
                                     </td>
                                     <td>{{ $order->total_bayar }}</td>
                                     <td>{{ $order->status }}</td>
-
                                     <td class="text-center">
                                         <a class="btn btn-outline-success btn-sm mb-1 "
                                             href="{{ route('order.edit', ['order' => $order->id_orders]) }}"><i
@@ -98,10 +99,9 @@
                                         </a>
                                     </td>
                                 </tr>
-                                {{ $order['order_detail'] }}
                             @endforeach
-
                         </tbody>
+
                     </table>
                 </div>
             </div>
