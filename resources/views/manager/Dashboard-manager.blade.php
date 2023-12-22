@@ -183,16 +183,17 @@
 
                                                 <tr>
                                                     <td>{{$loop->iteration}}.</td>
-                                                    <td><a href="pages/examples/invoice.html">Ords{{ $row->id_orders
+                                                    <td><a href="{{ asset('assets/pages/examples/invoice.html') }}">Ords{{
+                                                            $row->id_orders
                                                             }}</a>
                                                     </td>
                                                     <td>{{ $row->no_order }}</td>
                                                     <td>M-{{ $row->user_id }}</td>
-                                                    <td><span class="badge {{ ($row->status == 'bayar')? 'badge-success' :
+                                                    <td><span class="badge {{ ($row->status == 'Bayar')? 'badge-success' :
                                                     'badge-warning';}}  ">{{ $row->status
                                                             }}
                                                         </span>
-                                                        @if ($row->status == 'bayar')
+                                                        @if ($row->status == 'Bayar')
                                                         <i class="fa fa-solid fa-check text-success"></i>
                                                         @endif
                                                         @if ($row->status == 'Proses')
@@ -265,7 +266,7 @@
                                     $bulan = now()->month();
                                     // mengambil data order sesuai orderan di bulan tertentu
                                     $orderCompleteMonthly = \App\Models\Order::whereMonth('created_at', $bulan)->get();
-                                    $totalOrderComplete = $orderCompleteMonthly->where('status', 'bayar')->count();
+                                    $totalOrderComplete = $orderCompleteMonthly->where('status', 'Bayar')->count();
                                     $targerOrder = 1000;
                                     $persentaseComplete = ($totalOrderComplete / $targetOrder) * 100;
                                     @endphp
