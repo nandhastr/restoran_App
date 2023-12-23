@@ -271,7 +271,7 @@
         }
 
         .bg-rating {
-            background-color: #e9edf0;
+            background-color: #222831;
             border-radius: 20px;
             /* Atur nilai border-radius sesuai preferensi Anda */
             overflow: hidden;
@@ -468,9 +468,9 @@
     <!--rating-->
     @if (!empty($value->star_rating))
 
-        <div class="container">
-            <div class="row">
-                <div class="col mt-4">
+        <div class="container" >
+            <div class="row" >
+                <div class="col mt-4" >
                     <p class="font-weight-bold">Review</p>
                     <div class="form-group row">
                         <div class="col">
@@ -494,10 +494,10 @@
             <div class="container">
                 <div class="row">
                     <div class="col mt-4">
-                        <form class="py-2 px-4" action="{{ route('review.store') }}"
-                            style="box-shadow: 0 0 10px 0 #ddd;" method="POST" autocomplete="off">
+                        <form class="py-2 px-4 bg-rating" action="{{ route('review.store') }}"
+                            style="box-shadow: 0 0 10px 0 #222831;" method="POST" autocomplete="off">
                             @csrf
-                            <p class="font-weight-bold ">Review</p>
+                            <p class="font-weight-bold text-light">Review</p>
                             <div class="form-group row mt-4">
                                 <div class="col">
                                     <input type="text" class="form-control" name="name"
@@ -527,11 +527,11 @@
                             </div>
                             <div class="form-group row mt-4">
                                 <div class="col">
-                                    <textarea class="form-control" name="comment" rows="6 " placeholder="Comment" maxlength="200"></textarea>
+                                    <textarea class="form-control" name="comment" rows="6 " placeholder="Tinggalkan komentar Anda di sini" maxlength="200"></textarea>
                                 </div>
                             </div>
                             <div class="mt-3 text-right">
-                                <button class="btn btn-sm py-2 px-3 btn-dark">Submit
+                                <button class="btn btn-sm py-2 px-3 btn-light">Kirim
                                 </button>
                             </div>
                     </div>
@@ -555,14 +555,14 @@
                 @foreach ($value as $index => $item)
                     <div class="carousel-item @if ($index === 0) active @endif">
                         {{-- START --}}
-                        <div class="container bg-rating">
+                        <div class="container bg-rating" style="box-shadow: 0 0 10px 0 #222831;">
                             <div class="row">
                                 <div class="col mt-4">
-                                    <form class="py-2 px-4" style="box-shadow: 0 0 10px 0 #ddd;" method="POST"
+                                    <form class="py-2 px-4"  method="POST"
                                         autocomplete="off">
-                                        <p class="font-weight-bold ">REVUEW CUSTOMER</p>
+                                        <p class="font-weight-bold text-light">REVUEW CUSTOMER</p>
                                         <div class="">
-                                            <p class="text-left no-click text-uppercase fw-bold fs-4" name="comment"
+                                            <p class="text-left no-click text-uppercase fw-bold fs-4 text-light" name="comment"
                                                 maxlength="200" readonly>{{ $item->name }}
                                             </p>
                                         </div>
@@ -584,7 +584,7 @@
                                         </div>
                                         {{-- comment --}}
                                         <div class="">
-                                            <p class="text-left no-click text-capitalize fw-bold fs-6" name="comment"
+                                            <p class="text-left no-click text-capitalize fw-bold fs-6 text-light" name="comment"
                                                 maxlength="200" readonly>{{ $item->comments }}
                                             </p>
                                         </div>
