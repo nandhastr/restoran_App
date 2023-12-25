@@ -9,24 +9,62 @@
     <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
     <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
 
+    {{-- <script>
+    $(function() {
+            "columns": [
+            { "data": "id" },
+            { "data": "nama" },
+            { "data": "harga" },
+            // ...
+        ]
+            $('#data-tabel').DataTable();
+        });
+</script> --}}
+    <script>
+        // alert pembayran berhasil di konfirmasi
+        $(function() {
+            var Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 10000,
+            });
+
+            $(".swalDefaultSuccess").click(function() {
+                Toast.fire({
+                    icon: "success",
+                    title: "Yeah, Pembayaran sudah di konfirmasi !",
+                });
+            });
+
+            $(".confirmDelete").click(function(event) {
+                event.preventDefault();
+
+                Swal.fire({
+                    title: "Apa kamu yakin?",
+                    text: "Data akan terhapus permanen!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Yes, hapus!"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // jika tmbol yes d tekan makan akan di jalankan route delete 
+                        window.location.href = $(this).attr('href');
+                        Swal.fire({
+                            title: "Terhapus!",
+                            text: "Data sudah Terhapus!",
+                            icon: "success"
+                        });
+                    }
+                });
+            })
+        });
+    </script>
 @endsection
 
 @section('content')
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            @if(session('payment_notification'))
-                // Show SweetAlert for payment notification
-                Swal.fire({
-                    title: 'Pembayaran',
-                    text: 'Silahkan menuju ke kasir untuk melakukan pembayaran, Terimakasih',
-                    icon: 'info',
-                    confirmButtonColor: '#3085d6',
-                    confirmButtonText: 'OK'
-                });
-            @endif
-        });
-
-    </script>
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <div class="content-header">
@@ -73,7 +111,7 @@
                             @foreach ($orders as $order)
                                 <tr>
                                     <td>{{ $no++ }}</td>
-                                    <td>{{ $order->user->name }}</td>
+                                    <td>{{ $order->user_id }}</td>
                                     <td>{{ $order->no_order }}</td>
                                     <td>
                                         @if ($order->order_detail && is_array($order->order_detail))
@@ -92,12 +130,19 @@
                                     <td>Rp.{{ number_format($order->total_bayar, 0, ',', '.') }}</td>
                                     <td>{{ $order->status }}</td>
                                     <td class="text-center">
-                                        <a class="btn btn-outline-success btn-sm mb-1 "
-                                            href="{{ route('order.edit', ['order' => $order->id_orders]) }}"><i
-                                                class="fa fa-edit small"></i>
-                                        </a>
-                                        <a class="btn btn-outline-danger btn-sm mb-1 "
-                                            onclick="return confirm('Apakah anda yakin ?')"
+                                        {{-- <a href="{{ route('order.edit', ['order' => $order->id_orders]) }}"
+                                    data-toggle="modal" data-target="#modal-info-{{ $order->id_orders }}"
+                                    data-id="{{ $order->id_orders }}">
+                                    <i class="fa fa-solid fa-money-check text-dark"></i>
+                                </a> --}}
+                                        <button class="btn btn-outline-success btn-sm mb-1" data-toggle="modal"
+                                            data-target="#modal-info-{{ $order->id_orders }}"
+                                            data-id="{{ $order->id_orders }}"><i
+                                                class="fa fa-solid fa-money-check text-success  "></i>
+                                        </button>
+                                        <a class="btn btn-outline-danger btn-sm mb-1 confirmDelete" {{--
+                                    onclick="return confirm('apakah kamu yakin ?Data tidak dapat diulang kembali !')"
+                                    --}}
                                             href="{{ route('order.delete', ['order' => $order->id_orders]) }}"><i
                                                 class="fa fa-trash"></i>
                                         </a>
@@ -109,7 +154,93 @@
                     </table>
                 </div>
             </div>
+            @foreach ($orders as $order)
+                <div class="modal fade" id="modal-info-{{ $order->id_orders }}">
+                    <div class="modal-dialog">
+                        <div class="modal-content bg-info">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Info Pembayaran</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form action="{{ route('order.update', $order->id_orders) }}" method="post"
+                                    enctype="multipart/form-data">
+                                    @csrf
+                                    <input type="hidden" name="id_orders" value="{{ $order->id_orders }}">
 
+                                    <div class="row mb-3">
+                                        <label for="order" class="col-sm-2 col-form-label">No
+                                            Order</label>
+                                        <div class="col-sm-10">
+                                            <input name="no_order" type="text" class="form-control" id="order"
+                                                value="{{ $order->no_order }}">
+                                            @error('no_order')
+                                                <small class="text-red">{{ $message }}</small>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label for="order" class="col-sm-2 col-form-label">No
+                                            Order</label>
+                                        <div class="col-sm-10">
+                                            <input name="no_order" type="text" class="form-control" id="order"
+                                                value="{{ $order->no_order }}">
+                                            @error('no_order')
+                                                <small class="text-red">{{ $message }}</small>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label for="order" class="col-sm-2 col-form-label">Bayar</label>
+                                        <div class="col-sm-10">
+                                            <input name="bayar" type="text" class="form-control" id="order"
+                                                value="{{ number_format($order->bayar, 0, ',', '.') }}">
+                                            @error('bayar')
+                                                <small class="text-red">{{ $message }}</small>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label for="order" class="col-sm-2 col-form-label">Total
+                                            Bayar</label>
+                                        <div class="col-sm-10">
+                                            <input name="total_bayar" type="text" class="form-control" id="order"
+                                                value="{{ number_format($order->total_bayar, 0, ',', '.') }}">
+                                            @error('total_bayar')
+                                                <small class="text-red">{{ $message }}</small>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label for="order" class="col-sm-2 col-form-label">Status</label>
+                                        <div class="col-sm-10">
+                                            <select name="status" autofocus>
+                                                <option class="btn btn-success" value="Bayar">Terima
+                                                    Pembayaran</option>
+                                                <option class="btn btn-warning" value="Proses">Proses</option>
+                                            </select>
+                                            @error('status')
+                                                <small class="text-red">{{ $message }}</small>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <button type="submit" class="btn btn-success text-center swalDefaultSuccess"
+                                            id="konfirmasiBtn">Konfirmasi</button>
+                                        <button class="btn btn-danger text-center ml-3"><a class="text-light"
+                                                href="{{ route('order.index') }}">kembali</i></a></button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal-dialog -->
+                </div>
+                <!-- /.modal -->
+            @endforeach
         </section>
     </div>
 @endsection
