@@ -25,7 +25,6 @@ class OrderController extends Controller
         $orders = Order::with(['OrderDetail', 'User'])->get();
         $cartItems = Cart::content();
 
-        // return  $orders;
         return view('order.index', compact('orders', 'cartItems'))->with('payment_notification', session('payment_notification'));;
     }
 
