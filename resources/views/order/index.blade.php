@@ -9,20 +9,24 @@
     <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
     <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
 
-    {{-- <script>
-        $(function() {
-            "columns": [
-            { "data": "id" },
-            { "data": "nama" },
-            { "data": "harga" },
-            // ...
-        ]
-            $('#data-tabel').DataTable();
-        });
-    </script> --}}
 @endsection
 
 @section('content')
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            @if(session('payment_notification'))
+                // Show SweetAlert for payment notification
+                Swal.fire({
+                    title: 'Pembayaran',
+                    text: 'Silahkan menuju ke kasir untuk melakukan pembayaran, Terimakasih',
+                    icon: 'info',
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: 'OK'
+                });
+            @endif
+        });
+
+    </script>
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <div class="content-header">
@@ -85,7 +89,7 @@
                                             Tidak ada detail pesanan
                                         @endif
                                     </td>
-                                    <td>{{ $order->total_bayar }}</td>
+                                    <td>Rp.{{ number_format($order->total_bayar, 0, ',', '.') }}</td>
                                     <td>{{ $order->status }}</td>
                                     <td class="text-center">
                                         <a class="btn btn-outline-success btn-sm mb-1 "

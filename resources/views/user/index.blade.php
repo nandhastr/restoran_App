@@ -366,7 +366,7 @@
                                     style="font-size: 20px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
                                     {{ $d->nama_produks }}</h4>
                                     <input type="hidden" name="product_name" value=" {{ $d->nama_produks }}">
-                                <p class="card-text" style="font-size: 14px;">Rp.{{ $d->harga_produks }}</p>
+                                <p class="card-text" style="font-size: 14px;">Rp.{{ number_format($d->harga_produks, 0, ',', '.') }}</p>
                                 <a class="btn btn-warning btn-sm" data-toggle="modal"
                                     data-target="#exampleModals{{ $d->id_produks }}" title="App 1">Lihat Produk</a>
                                 <a class="btn btn-success btn-sm" data-toggle="modal"
@@ -388,7 +388,7 @@
                                             {{ $d->nama_produks }}
                                         </h4>
                                         <p class="card-text text-white" style="font-size: 12px;"><b>Harga:
-                                            </b>Rp.{{ $d->harga_produks }}</p>
+                                            </b>Rp.{{ number_format($d->harga_produks, 0, ',', '.') }}</p>
                                         <p class="card-text text-white" style="font-size: 12px;"><b>Deskripsi: </b>
                                         </p>
                                         <p class="card-text text-white" style="font-size: 12px;">
