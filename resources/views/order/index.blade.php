@@ -1,49 +1,49 @@
 @extends('manager/layouts.master')
 @section('css')
-{{--
+    {{--
 <link rel="stylesheet" href="{{ asset('asset/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}"> --}}
-<link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
 @endsection
 
 @section('content')
-<div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <div class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0">Order</h1>
-                </div><!-- /.col -->
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Order</li>
-                    </ol>
-                </div><!-- /.col -->
-            </div><!-- /.row -->
-        </div><!-- /.container-fluid -->
-    </div>
-    <!-- /.content-header -->
-    <!-- Main content -->
-    <section class="content mt-4">
-        <div class="container-fluid">
-            <div class="container">
-                {{-- this cozntent --}}
-                <a class="btn btn-info mb-3" href="{{ route('manager.index') }}"><i class="fa fa-arrow-left"></i></a>
-                <a class="btn btn-dark mb-3" href="{{ route('export.index') }}">Export Data</a>
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 class="m-0">Order</h1>
+                    </div><!-- /.col -->
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item active">Order</li>
+                        </ol>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
+        <!-- Main content -->
+        <section class="content mt-4">
+            <div class="container-fluid">
+                <div class="container">
+                    {{-- this cozntent --}}
+                    <a class="btn btn-info mb-3" href="{{ route('manager.index') }}"><i class="fa fa-arrow-left"></i></a>
+                    <a class="btn btn-dark mb-3" href="{{ route('export.index') }}">Export Data</a>
 
-                <table class="table table-hover" id="data-tabel">
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>Nama</th>
-                            <th>No Order</th>
-                            <th>Order</th>
-                            <th>Total Bayar</th>
-                            <th>Status</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
+                    <table class="table table-hover" id="data-tabel">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Nama</th>
+                                <th>No Order</th>
+                                <th>Order</th>
+                                <th>Total Bayar</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
 
                     <tbody>
                         @php
@@ -85,8 +85,10 @@
                         @endforeach
                     </tbody>
 
-                </table>
+                    </table>
+                </div>
             </div>
+
         </div>
         @foreach ($orders as $order)
         <div class="modal fade" id="modal-info-{{ $order->id_orders }}">
@@ -161,9 +163,12 @@
                                 <button class="btn btn-danger text-center ml-3"><a class="text-light"
                                         href="{{ route('order.index') }}">kembali</i></a></button>
                             </div>
-                        </form>
+                        </div>
+                        <!-- /.modal-content -->
                     </div>
+                    <!-- /.modal-dialog -->
                 </div>
+
                 <!-- /.modal-content -->
             </div>
             <!-- /.modal-dialog -->
