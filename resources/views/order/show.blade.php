@@ -139,7 +139,7 @@
                             <input type="hidden" name="cart_items[{{ $item->id }}][harga]"
                                 value="{{ $item->price }}">
                             <input type="hidden" name="cart_items[{{ $item->id }}][total_harga]"
-                                value="{{ $item->total }}">
+                                value="{{ $item->qty * $item->price }}">
                         @endforeach
                     </tbody>
                 </table>

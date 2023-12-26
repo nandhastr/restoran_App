@@ -97,7 +97,10 @@
                                 <th>No</th>
                                 <th>Nama</th>
                                 <th>No Order</th>
-                                <th>Order</th>
+                                <th>Produk</th>
+                                <th>Harga</th>
+                                <th>Jumlah</th>
+                                <th>Total Harga</th>
                                 <th>Total Bayar</th>
                                 <th>Status</th>
                                 <th>Action</th>
@@ -105,6 +108,15 @@
                         </thead>
 
                         <tbody>
+                            @if (count($orders) === 0)
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td style="text-align: center">Data Kosong</td>
+                            </tr>
+                            @else
                             @php
                                 $no = 1;
                             @endphp
@@ -114,20 +126,30 @@
                                     <td>{{ $order->user->name }}</td>
                                     <td>{{ $order->no_order }}</td>
                                     <td>
-                                        @if ($order->order_detail && is_array($order->order_detail))
-                                            @foreach ($order->order_detail as $produkOrder)
-                                                Produk ID: {{ $produkOrder->produk_id }}<br>
-                                                Jumlah: {{ $produkOrder->jumlah }}<br>
-                                                Harga: {{ $produkOrder->harga }}<br>
-                                                Total Harga: {{ $produkOrder->total_harga }}<br>
-                                                <!-- Add more details if needed -->
-                                                <br>
-                                            @endforeach
-                                        @else
-                                            Tidak ada detail pesanan
-                                        @endif
+                                        @foreach ($order->OrderDetail as $produkOrder)
+                                        {{ $produkOrder->produk->nama_produks }} <br>
+                                        @endforeach
                                     </td>
-                                    <td>Rp.{{ number_format($order->total_bayar, 0, ',', '.') }}</td>
+                                    <td>
+                                        @foreach ($order->OrderDetail as $produkOrder)
+                                        Rp {{ number_format($produkOrder->harga, 0, ',', '.') }} <br>
+                                        @endforeach
+                                    </td>
+                                    <td>
+                                        @foreach ($order->OrderDetail as $produkOrder)
+                                        {{ $produkOrder->jumlah }} <br>
+                                        @endforeach
+                                    </td>
+                                    <td>
+                                        @foreach ($order->OrderDetail as $produkOrder)
+                                        Rp {{ number_format($produkOrder->total_harga, 0, ',', '.') }} <br>
+                                        @endforeach
+                                    </td>
+                                    <td> @if ($order->total_bayar == '0')
+                                        Lunas
+                                    @else
+                                    Rp {{ number_format($order->total_bayar, 0, ',', '.') }}
+                                    @endif </td>
                                     <td>{{ $order->status }}</td>
                                     <td class="text-center">
                                         {{-- <a href="{{ route('order.edit', ['order' => $order->id_orders]) }}"
@@ -149,6 +171,8 @@
                                     </td>
                                 </tr>
                             @endforeach
+                            @endif
+
                         </tbody>
 
                     </table>
@@ -175,28 +199,63 @@
                                             Order</label>
                                         <div class="col-sm-10">
                                             <input name="no_order" type="text" class="form-control" id="order"
-                                                value="{{ $order->no_order }}">
+                                                value="{{ $order->no_order }}" readonly>
                                             @error('no_order')
                                                 <small class="text-red">{{ $message }}</small>
                                             @enderror
                                         </div>
                                     </div>
                                     <div class="row mb-3">
-                                        <label for="order" class="col-sm-2 col-form-label">No
-                                            Order</label>
-                                        <div class="col-sm-10">
+                                        {{-- <label for="order" class="col-sm-2 col-form-label">Produk</label> --}}
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Product</th>
+                                                    <th>Quantity</th>
+                                                    <th>Price</th>
+                                                    <th>Total</th>
+                                                    {{-- <th>Action</th> --}}
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($order->OrderDetail as $produkOrder)
+                                                    <tr>
+                                                        <td>{{ $produkOrder->produk->nama_produks }}</td>
+                                                        <td>{{ $produkOrder->jumlah }}</td>
+                                                        <td>Rp {{ number_format($produkOrder->harga, 0, ',', '.') }}</td>
+                                                        <td>Rp {{ number_format($produkOrder->jumlah * $produkOrder->harga, 0, ',', '.') }}</td>
+                                                        {{-- <td>
+                                                            <a href="{{ route('cart.remove', $item->rowId) }}" class="btn btn-danger btn-sm">
+                                                                Remove
+                                                            </a>
+                                                        </td> --}}
+                                                    </tr>
+                                                    {{-- <input type="hidden" name="cart_items[{{ $item->id }}][produk_id]"
+                                                        value="{{ $item->id }}">
+                                                    <input type="hidden" name="cart_items[{{ $item->id }}][jumlah]"
+                                                        value="{{ $item->qty }}">
+                                                    <input type="hidden" name="cart_items[{{ $item->id }}][harga]"
+                                                        value="{{ $item->price }}">
+                                                    <input type="hidden" name="cart_items[{{ $item->id }}][total_harga]"
+                                                        value="{{ $item->qty * $item->price }}"> --}}
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+
+
+                                        {{-- <div class="col-sm-10">
                                             <input name="no_order" type="text" class="form-control" id="order"
                                                 value="{{ $order->no_order }}">
                                             @error('no_order')
                                                 <small class="text-red">{{ $message }}</small>
                                             @enderror
-                                        </div>
+                                        </div> --}}
                                     </div>
                                     <div class="row mb-3">
                                         <label for="order" class="col-sm-2 col-form-label">Bayar</label>
                                         <div class="col-sm-10">
                                             <input name="bayar" type="text" class="form-control" id="order"
-                                                value="{{ number_format($order->bayar, 0, ',', '.') }}">
+                                                value="">
                                             @error('bayar')
                                                 <small class="text-red">{{ $message }}</small>
                                             @enderror
@@ -207,7 +266,7 @@
                                             Bayar</label>
                                         <div class="col-sm-10">
                                             <input name="total_bayar" type="text" class="form-control" id="order"
-                                                value="{{ number_format($order->total_bayar, 0, ',', '.') }}">
+                                                value="{{ $order->total_bayar }}" readonly>
                                             @error('total_bayar')
                                                 <small class="text-red">{{ $message }}</small>
                                             @enderror
