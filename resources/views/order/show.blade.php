@@ -24,6 +24,12 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <script src="{{ asset('js/jquery.min.js') }}"></script>
+    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
+
+
     <style>
         .empty-cart-message {
             text-align: center;
@@ -106,10 +112,9 @@
 
 
         @if (count($cartItems) > 0)
-        <form action="{{ route('cart.store') }}" method="post">
+        <form id="checkoutForm" action="{{ route('cart.store') }}" method="post">
             @csrf
             <input type="hidden" name="user_id" id="user_id" value="{{ Auth::user()->id }}">
-
             <table class="table">
                 <thead>
                     <tr>
@@ -123,7 +128,6 @@
                 <tbody>
                     @foreach ($cartItems as $item)
                     <tr>
-
                         <td>{{ $item->name }}</td>
                         <td>{{ $item->qty }}</td>
                         <td>Rp.{{ number_format($item->price, 0, ',', '.') }}</td>
@@ -142,15 +146,37 @@
                 </tbody>
             </table>
             <p>Total: Rp.{{ number_format(Cart::subtotal(), 0, ',', '.') }}</p>
-            <button type="submit" class="btn btn-primary">Proceed to Checkout</button>
-        </form>
-        @else
-        <div class="empty-cart-message">
-            <p>Keranjang Belanja Kosong.</p>
-        </div>
-        @endif
+            <button type="submit" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">Procesed to
+                Checkout</button>
+            @else
+            <div class="empty-cart-message">
+                <p>Keranjang Belanja Kosong.</p>
+            </div>
+            @endif
 
-    </div>
+            <div class="modal" id="myModal" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Pesanan Berhasil</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Silahkan lakukan pembayaran di kasir.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <script>
+                $(document).ready(function () {
+                     function submitCheckoutForm() {
+                     document.getElementById('checkoutForm').submit();
+                     }
+                    });
+            </script>
+
 </body>
 
 </html>
