@@ -12,8 +12,8 @@
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <link rel="icon" href="{{ asset('img/resto.png') }}">
+    <title>{{ __('Halaman Checkout') }}</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -25,9 +25,9 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <script src="{{ asset('js/jquery.min.js') }}"></script>
-<script src="{{ asset('js/bootstrap.min.js') }}"></script>
-<script src="{{ asset('js/app.js') }}" defer></script>
-<script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
 
 
     <style>
@@ -38,6 +38,7 @@
             border-radius: 8px;
             background-color: #f9f9f9;
         }
+
         body {
             font-family: 'Arial', sans-serif;
             background-image: url('uploads/23.jpg');
@@ -69,7 +70,8 @@
             border-collapse: collapse;
         }
 
-        th, td {
+        th,
+        td {
             border: 1px solid #ddd;
             padding: 10px;
             text-align: left;
@@ -111,74 +113,69 @@
 
         @if (count($cartItems) > 0)
         <form id="checkoutForm" action="{{ route('cart.store') }}" method="post">
-                @csrf
-                <input type="hidden" name="user_id" id="user_id" value="{{ Auth::user()->id }}">
-
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Product</th>
-                            <th>Quantity</th>
-                            <th>Price</th>
-                            <th>Total</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($cartItems as $item)
-                            <tr>
-
-                                <td>{{ $item->name }}</td>
-                                <td>{{ $item->qty }}</td>
-                                <td>Rp.{{ number_format($item->price, 0, ',', '.') }}</td>
-                                <td>Rp.{{ number_format($item->qty * $item->price, 0, ',', '.') }}</td>
-                                <td>
-                                    <a href="{{ route('cart.remove', $item->rowId) }}" class="btn btn-danger btn-sm">
-                                        Remove
-                                    </a>
-                                </td>
-                            </tr>
-                            <input type="hidden" name="cart_items[{{ $item->id }}][produk_id]"
-                                value="{{ $item->id }}">
-                            <input type="hidden" name="cart_items[{{ $item->id }}][jumlah]"
-                                value="{{ $item->qty }}">
-                            <input type="hidden" name="cart_items[{{ $item->id }}][harga]"
-                                value="{{ $item->price }}">
-                            <input type="hidden" name="cart_items[{{ $item->id }}][total_harga]"
-                                value="{{ $item->total }}">
-                        @endforeach
-                    </tbody>
-                </table>
-                <p>Total: Rp.{{ number_format(Cart::subtotal(), 0, ',', '.') }}</p>
-                <button type="submit" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">Procesed to Checkout</button>
-        @else
+            @csrf
+            <input type="hidden" name="user_id" id="user_id" value="{{ Auth::user()->id }}">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Total</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($cartItems as $item)
+                    <tr>
+                        <td>{{ $item->name }}</td>
+                        <td>{{ $item->qty }}</td>
+                        <td>Rp.{{ number_format($item->price, 0, ',', '.') }}</td>
+                        <td>Rp.{{ number_format($item->qty * $item->price, 0, ',', '.') }}</td>
+                        <td>
+                            <a href="{{ route('cart.remove', $item->rowId) }}" class="btn btn-danger btn-sm">
+                                Remove
+                            </a>
+                        </td>
+                    </tr>
+                    <input type="hidden" name="cart_items[{{ $item->id }}][produk_id]" value="{{ $item->id }}">
+                    <input type="hidden" name="cart_items[{{ $item->id }}][jumlah]" value="{{ $item->qty }}">
+                    <input type="hidden" name="cart_items[{{ $item->id }}][harga]" value="{{ $item->price }}">
+                    <input type="hidden" name="cart_items[{{ $item->id }}][total_harga]" value="{{ $item->total }}">
+                    @endforeach
+                </tbody>
+            </table>
+            <p>Total: Rp.{{ number_format(Cart::subtotal(), 0, ',', '.') }}</p>
+            <button type="submit" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">Procesed to
+                Checkout</button>
+            @else
             <div class="empty-cart-message">
                 <p>Keranjang Belanja Kosong.</p>
             </div>
-        @endif
+            @endif
 
-        <div class="modal" id="myModal" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Pesanan Berhasil</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="modal" id="myModal" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Pesanan Berhasil</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Silahkan lakukan pembayaran di kasir.</p>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="modal-body">
-                <p>Silahkan lakukan pembayaran di kasir.</p>
-            </div>
-        </div>
-    </div>
-</div>
 
 
-<script>
-    $(document).ready(function () {
-    function submitCheckoutForm() {
-        document.getElementById('checkoutForm').submit();
-    }
-    });
-</script>
+            <script>
+                $(document).ready(function () {
+                     function submitCheckoutForm() {
+                     document.getElementById('checkoutForm').submit();
+                     }
+                    });
+            </script>
 
 </body>
 
