@@ -12,8 +12,8 @@
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <link rel="icon" href="{{ asset('img/resto.png') }}">
+    <title>{{ __('Halaman Checkout') }}</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -32,6 +32,7 @@
             border-radius: 8px;
             background-color: #f9f9f9;
         }
+
         body {
             font-family: 'Arial', sans-serif;
             background-image: url('uploads/23.jpg');
@@ -63,7 +64,8 @@
             border-collapse: collapse;
         }
 
-        th, td {
+        th,
+        td {
             border: 1px solid #ddd;
             padding: 10px;
             text-align: left;
@@ -104,52 +106,48 @@
 
 
         @if (count($cartItems) > 0)
-            <form action="{{ route('cart.store') }}" method="post">
-                @csrf
-                <input type="hidden" name="user_id" id="user_id" value="{{ Auth::user()->id }}">
+        <form action="{{ route('cart.store') }}" method="post">
+            @csrf
+            <input type="hidden" name="user_id" id="user_id" value="{{ Auth::user()->id }}">
 
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Product</th>
-                            <th>Quantity</th>
-                            <th>Price</th>
-                            <th>Total</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($cartItems as $item)
-                            <tr>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Total</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($cartItems as $item)
+                    <tr>
 
-                                <td>{{ $item->name }}</td>
-                                <td>{{ $item->qty }}</td>
-                                <td>Rp.{{ number_format($item->price, 0, ',', '.') }}</td>
-                                <td>Rp.{{ number_format($item->qty * $item->price, 0, ',', '.') }}</td>
-                                <td>
-                                    <a href="{{ route('cart.remove', $item->rowId) }}" class="btn btn-danger btn-sm">
-                                        Remove
-                                    </a>
-                                </td>
-                            </tr>
-                            <input type="hidden" name="cart_items[{{ $item->id }}][produk_id]"
-                                value="{{ $item->id }}">
-                            <input type="hidden" name="cart_items[{{ $item->id }}][jumlah]"
-                                value="{{ $item->qty }}">
-                            <input type="hidden" name="cart_items[{{ $item->id }}][harga]"
-                                value="{{ $item->price }}">
-                            <input type="hidden" name="cart_items[{{ $item->id }}][total_harga]"
-                                value="{{ $item->total }}">
-                        @endforeach
-                    </tbody>
-                </table>
-                <p>Total: Rp.{{ number_format(Cart::subtotal(), 0, ',', '.') }}</p>
-                <button type="submit" class="btn btn-primary">Proceed to Checkout</button>
-            </form>
+                        <td>{{ $item->name }}</td>
+                        <td>{{ $item->qty }}</td>
+                        <td>Rp.{{ number_format($item->price, 0, ',', '.') }}</td>
+                        <td>Rp.{{ number_format($item->qty * $item->price, 0, ',', '.') }}</td>
+                        <td>
+                            <a href="{{ route('cart.remove', $item->rowId) }}" class="btn btn-danger btn-sm">
+                                Remove
+                            </a>
+                        </td>
+                    </tr>
+                    <input type="hidden" name="cart_items[{{ $item->id }}][produk_id]" value="{{ $item->id }}">
+                    <input type="hidden" name="cart_items[{{ $item->id }}][jumlah]" value="{{ $item->qty }}">
+                    <input type="hidden" name="cart_items[{{ $item->id }}][harga]" value="{{ $item->price }}">
+                    <input type="hidden" name="cart_items[{{ $item->id }}][total_harga]" value="{{ $item->total }}">
+                    @endforeach
+                </tbody>
+            </table>
+            <p>Total: Rp.{{ number_format(Cart::subtotal(), 0, ',', '.') }}</p>
+            <button type="submit" class="btn btn-primary">Proceed to Checkout</button>
+        </form>
         @else
-            <div class="empty-cart-message">
-                <p>Keranjang Belanja Kosong.</p>
-            </div>
+        <div class="empty-cart-message">
+            <p>Keranjang Belanja Kosong.</p>
+        </div>
         @endif
 
     </div>
