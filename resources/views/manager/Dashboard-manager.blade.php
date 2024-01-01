@@ -147,18 +147,61 @@
                             </button> --}}
                             </div>
                         </div>
-                        <!-- /.card-header -->
-                        <div class="card-body bg-secondary">
-                            <div class="row">
-                                <div class="col">
-                                    @php
-                                        $bulan = now()->month; // Mengambil bulan saat ini
-                                        $salesMonthly = \App\Models\Order::whereMonth('created_at', $bulan)->get();
 
-                                        $year = now()->years(); // Mengambil tahun saat ini
-                                        $salesYears = \App\Models\Order::whereYear('created_at', $year)->get();
-                                    @endphp
-                                    {{ __('Sales: :month', ['month' => now()->monthName . ', ' . now()->year]) }}
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body bg-secondary">
+                        <div class="row">
+                            <div class="col">
+
+                                @php
+                                $bulan = now()->month; // Mengambil bulan saat ini
+                                $salesMonthly = \App\Models\Order::whereMonth('created_at', $bulan)->get();
+
+                                $year = now()->years(); // Mengambil tahun saat ini
+                                $salesYears = \App\Models\Order::whereYear('created_at', $year)->get();
+                                @endphp
+                                {{ __('Sales: :month', ['month' => now()->monthName . ', ' . now()->year]) }}
+
+                                <!-- TABLE: LATEST ORDERS -->
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h4 class="card-title text-dark "><b>Data Penjualan</b></h4>
+                                    </div>
+                                    <!-- /.card-header -->
+                                    <div class="card-body">
+                                        <table id="example1" class="table table-bordered table-striped text-dark">
+                                            <thead>
+                                                <tr>
+                                                    <th>No</th>
+                                                    <th>Order ID</th>
+                                                    <th>No Ordder</th>
+                                                    <th>Nama</th>
+                                                    <th>Status</th>
+                                                    <th>Total Terbayar</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($orders as $row )
+
+                                                <tr>
+                                                    <td>{{$loop->iteration}}.</td>
+                                                    <td><a href="{{ asset('assets/pages/examples/invoice.html') }}">Ords{{
+                                                            $row->id_orders
+                                                            }}</a>
+                                                    </td>
+                                                    <td>{{ $row->no_order }}</td>
+                                                    <td>{{ $row->user_id }}</td>
+                                                    <td><span class="badge {{ ($row->status == 'Bayar')? 'badge-success' :
+                                                    'badge-warning';}}  ">{{ $row->status
+                                                            }}
+                                                        </span>
+                                                        @if ($row->status == 'Bayar')
+                                                        <i class="fa fa-solid fa-check text-success"></i>
+                                                        @endif
+                                                        @if ($row->status == 'Proses')
+                                                        <i class="fa fa-solid fa-hourglass-half text-warning"></i>
+                                                        @endif
 
                                     <!-- TABLE: LATEST ORDERS -->
                                     <div class="card">
@@ -218,6 +261,15 @@
                                 </div>
                                 <!-- /.col -->
 
+
+                            {{-- /.row --}}
+                        </div>
+                        <!-- /.row -->
+                        <div class="row bg-dark pt-2">
+                            <div class="col">
+                                <p class="text-center">
+                                    <strong>{{ ('Pencapaian Target') }}</strong>
+                                </p>
                             </div>
                             <!-- /.row -->
                             <div class="row bg-dark pt-2">
@@ -284,21 +336,23 @@
                                 </div>
                                 <!-- /.col -->
 
-                                <div class="col-md-3">
-                                    <div class="description-block border-right">
-                                        @php
-                                            $bulan = now()->month();
-                                            // mengambil data order sesuai orderan di bulan tertentu
-                                            $totalBayarMonthly = \App\Models\Order::whereMonth('created_at', $bulan)->get();
-                                            $totalTerbayar = $totalBayarMonthly->sum('total_bayar');
-                                            $targetMonth = 10000000;
-                                            $persentaseTotalBayar = ($totalTerbayar / $targetMonth) * 100;
-                                            // icon persentase
-                                            $descPersentase = $totalTerbayar > 0 ? 'description-percentage text-success' : 'description-percentage text-danger';
-                                            $iconPersentase =
-                                                $totalTerbayar > 0
-                                                    ? 'fas fa-caret-up text-success'
-                                                    : 'fas
+                            
+                            <div class="col-md-3">
+                                <div class="description-block border-right">
+                                    @php
+                                    $bulan = now()->month();
+                                    // mengambil data order sesuai orderan di bulan tertentu
+                                    $totalBayarMonthly = \App\Models\Order::whereMonth('created_at', $bulan)
+                                    ->where('status', 'Bayar')
+                                    ->get();
+
+                                    $totalTerbayar = $totalBayarMonthly->sum('total_bayar');
+                                    $targetMonth = 10000000;
+                                    $persentaseTotalBayar = ($totalTerbayar / $targetMonth) * 100;
+                                    // icon persentase
+                                    $descPersentase = ($totalTerbayar > 0)? 'description-percentage text-success' :
+                                    'description-percentage text-danger';
+                                    $iconPersentase = ($totalTerbayar > 0)? 'fas fa-caret-up text-success' : 'fas
                                     fa-caret-down text-danger';
                                             $profitText = $totalTerbayar > 0 ? 'text-success' : 'text-danger';
                                         @endphp
@@ -311,22 +365,31 @@
                                     </div>
                                     <!-- /.description-block -->
                                 </div>
-                                <!-- /.col -->
-                                <div class="col-md-3">
-                                    <div class="description-block border-right">
-                                        @php
-                                            $bulan = now()->month();
-                                            // mengambil data order sesuai orderan di bulan tertentu
-                                            $totalBayarMonthly = \App\Models\Order::whereMonth('created_at', $bulan)->get();
-                                            $targetProfit_bulan = 100000000;
-                                            $modal = 10000000;
-                                            $keuntungan = $totalTerbayar - $modal;
-                                            $persentaseKeuntungan = ($keuntungan / $targetProfit_bulan) * 100;
-                                            // icon persentase
-                                            $iconPersentase =
-                                                $keuntungan > 0
-                                                    ? 'fas fa-caret-up text-success'
-                                                    : 'fas
+
+                                <!-- /.description-block -->
+                            </div>
+                            <!-- /.col -->
+                            <div class="col-md-3">
+                                <div class="description-block border-right">
+                                    @php
+                                    $bulan = now()->month();
+                                    // mengambil data order sesuai orderan di bulan tertentu
+                                    $totalBayarMonthly = \App\Models\Order::whereMonth('created_at', $bulan)
+                                    ->where('status', 'Bayar')
+                                    ->get();
+                                    // Menghitung total terbayar berdasarkan order yang sudah dibayar
+                                    $totalTerbayar = $totalBayarMonthly->sum('total_bayar');
+
+                                    $targetProfit_bulan = 100000000;
+                                    $modal = 10000000;
+
+                                    // Menghitung keuntungan
+                                    $keuntungan = $totalTerbayar - $modal;
+
+                                    // Menghitung persentase keuntungan
+                                    $persentaseKeuntungan = ($keuntungan / $targetProfit_bulan) * 100;
+                                    // icon persentase
+                                    $iconPersentase = ($keuntungan > 0)? 'fas fa-caret-up text-success' : 'fas
                                     fa-caret-down text-danger';
                                             $descPersentase = $keuntungan > 0 ? 'description-percentage text-success' : 'description-percentage text-danger';
                                             $profitText = $keuntungan > 0 ? 'text-success' : 'text-danger';
@@ -339,22 +402,38 @@
                                     </div>
                                     <!-- /.description-block -->
                                 </div>
-                                <!-- /.col -->
-                                <div class="col-md-3">
-                                    <div class="description-block ">
-                                        <span class="description-percentage text-danger"><i class="fas fa-caret-down"></i>
-                                            80%</span>
-                                        <h5 class="description-header">100</h5>
-                                        <span class="description-text">PENCAPAIAN TARGET</span>
-                                    </div>
-                                    <!-- /.description-block -->
+
+                                <!-- /.description-block -->
+                            </div>
+                            <!-- /.col -->
+                            <div class="col-md-3">
+                                <div class="description-block ">
+                                    @php
+                                    $bulan = now()->month();
+                                    // mengambil data order sesuai orderan di bulan tertentu
+                                    $orderMonthly = \App\Models\Order::whereMonth('created_at', $bulan)->get();
+                                    $totalOrder = $orderMonthly->count();
+                                    $targetOrder = 1000;
+                                    $persentaseOrder = ($totalOrder/$targetOrder)*100;
+
+                                    // icon persentase
+                                    $iconPersentase = ($totalOrder > 0)? 'fas fa-caret-up text-success' : 'fas
+                                    fa-caret-down text-danger';
+                                    $descPersentase = ($totalOrder > 0)? 'description-percentage text-success' :
+                                    'description-percentage text-danger';
+                                    $textTotal = ($totalOrder > 0 )? 'text-success': 'text-danger';
+                                    @endphp
+                                    <span class="description-percentage {{ $descPersentase }} "><i
+                                            class="fas {{ $iconPersentase }}"></i>
+                                        {{ $persentaseOrder }}%</span>
+                                    <h5 class="description-header {{ $textTotal }}">{{ $totalOrder }}</h5>
+                                    <span class="description-text">PENCAPAIAN TARGET</span>
                                 </div>
                                 <!-- /.col -->
 
                             </div>
                             {{-- /.row --}}
                         </div>
-                        <!-- ./card-body -->
                     </div>
                     <!-- /.card -->
                 </div>
