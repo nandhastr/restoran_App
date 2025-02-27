@@ -1,4 +1,15 @@
 {
+    "builds": [
+        {
+            "src": "index.php",
+            "use": "@vercel/php"
+        }
+    ],
+    
+
+    "buildCommand": "apt-get update && apt-get install -y libssl1.1 && composer install",
+
+
     "version": 2,
     "functions": {
         "api/index.php": {
